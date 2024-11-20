@@ -41,14 +41,10 @@ export default function CommercialPage() {
   
   //const toast = useToast()
   return (
-    <>
-    {res ? (
+   
       <ProtectedRoute>
         Reklam Alanı - Logged In
       </ProtectedRoute>
-    ) : (
-      <LoadingContent/>
-    )}
-    </>
+   
   )
 }
