@@ -1,13 +1,27 @@
 "use client"
 
-import { useToast, Button, Stack } from "@chakra-ui/react"
+import { useToast, Button, Stack, Image } from "@chakra-ui/react"
 import PwaModal from "@/components/pwa-modal"
 
 import { apiClient } from "@/apiClient"
 import { useEffect, useState } from "react";
 import ProtectedRoute from "@/components/protected-route.component";
+import GlowingButton from "@/components/glowing-button.component";
 
+const LoadingContent = () => {
 
+  return(
+    <Stack maxH={'120vh'} w={'full'} border={'1px'}>
+      {/* <Image
+        src="/lv-text.png"
+        boxSize={600}
+      /> */}
+      <GlowingButton>
+
+      </GlowingButton>
+    </Stack>
+  );
+}
 
 export default function CommercialPage() {
   const[res, setRes] = useState("");
@@ -33,9 +47,7 @@ export default function CommercialPage() {
         Reklam Alanı - Logged In
       </ProtectedRoute>
     ) : (
-      <>
-        Reklam Alanı
-      </>
+      <LoadingContent/>
     )}
     </>
   )

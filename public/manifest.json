@@ -3,22 +3,30 @@
     "background_color":"#200146",
     "icons":[
         {
-            "purpose":"maskable",
+            "src": "/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            
             "sizes":"512x512",
             "src":"icon512_maskable.png",
             "type":"image/png"
-        },
-        {
-            "purpose":"any",
-            "sizes":"512x512",
-            "src":"icon512_rounded.png",
-            "type":"image/png"
         }
     ],
-    "orientation":"any",
+    
     "display":"standalone",
-    "dir":"auto",
-    "lang":"tr-TR",
     "name":"Pulse Flow",
-    "short_name":"Pulse Flow"
+    "short_name":"Pulse Flow",
+    "start_url": "/login"
 }

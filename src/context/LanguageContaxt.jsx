@@ -5,8 +5,8 @@ import Cookies from 'js-cookie';
 const LanguageContext = createContext();
 
 const availableLanguages = [
-  { code: 'en', name: 'EN' },
-  { code: 'tr', name: 'TR' },
+  {id: 1, code: 'en', name: 'EN' },
+  {id: 2, code: 'tr', name: 'TR' },
   // Add more languages as needed
 ];
 

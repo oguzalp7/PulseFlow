@@ -17,7 +17,7 @@ const LanguageDropdown = () => {
     <Select backgroundColor={'transparent'} color='green'  value={language} onChange={handleLanguageChange}>
       {availableLanguages.map((lang, index) => (
         <>
-          <option key={index} value={lang.code}>
+          <option key={lang.id} value={lang.code}>
             {lang.name}
           </option>
         </>

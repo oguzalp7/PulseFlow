@@ -85,14 +85,14 @@ const Projects = () => {
         {
             label: 'update',
             color: 'gray',
-            onClick: handleUpdate,
-            isDisabled: showDepartmentDropdown === false
+            //onClick: handleUpdate,
+            isDisabled: true
         },
         {
             label: 'delete',
             color: 'red',
-            onClick: handleDelete,
-            isDisabled: showBranchDropdown === false
+            //onClick: handleDelete,
+            isDisabled: true
         },
     ];
 
