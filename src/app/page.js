@@ -27,6 +27,7 @@ function PushNotificationManager() {
       setIsSupported(true);
       navigator.serviceWorker.ready.then(registration => {
         registration.pushManager.getSubscription().then(sub => {
+          console.log('Existing subscription:', sub);
           setSubscription(sub);
         });
       });
@@ -41,6 +42,7 @@ function PushNotificationManager() {
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY),
     });
+    console.log('New subscription:', subscription);
     setSubscription(subscription);
     await subscribeUser(subscription);
   };
@@ -49,6 +51,7 @@ function PushNotificationManager() {
     if (!subscription) return;
 
     await subscription.unsubscribe();
+    console.log('Unsubscribed:', subscription);
     setSubscription(null);
     await unsubscribeUser();
   };
@@ -61,7 +64,7 @@ function PushNotificationManager() {
 
   return (
     <div>
-      <Text as="h1" fontFamily="heading">Push Notification Manager</Text>
+      <Text as="h1" fontFamily="heading">Support: {isSupported ? 'YES' : 'NO'}</Text>
       <Button onClick={handleSubscribe} disabled={!!subscription}>Subscribe</Button>
       <Button onClick={handleUnsubscribe} disabled={!subscription}>Unsubscribe</Button>
       <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Notification message" />
