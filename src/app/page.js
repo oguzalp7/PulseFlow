@@ -1,6 +1,6 @@
 "use client"
 
-import { Text, Button } from "@chakra-ui/react";
+import { Text, Button, useToast } from "@chakra-ui/react";
 import { useState, useEffect } from 'react';
 import { subscribeUser, unsubscribeUser, sendNotification } from './actions';
 
@@ -21,6 +21,8 @@ function PushNotificationManager() {
   const [isSupported, setIsSupported] = useState(false);
   const [subscription, setSubscription] = useState(null);
   const [message, setMessage] = useState('');
+  const toast = useToast();
+
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -28,9 +30,21 @@ function PushNotificationManager() {
         navigator.serviceWorker.register("/sw.js").then(
           (registration) => {
             console.log("Service Worker registered with scope:", registration.scope);
+            toast({
+              title: "Service Worker registered",
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+            })
           },
           (error) => {
             console.log("Service Worker registration failed:", error);
+            toast({
+              title: "Service Worker registration failed",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+            })
           }
         );
       });
@@ -57,9 +71,21 @@ function PushNotificationManager() {
         navigator.serviceWorker.register("/sw.js").then(
           (registration) => {
             console.log("Service Worker registered with scope:", registration.scope);
+            toast({
+              title: "Service Worker registered",
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+            })
           },
           (error) => {
             console.log("Service Worker registration failed:", error);
+            toast({
+              title: "Service Worker registration failed",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+            })
           }
         );
       });
@@ -83,9 +109,21 @@ function PushNotificationManager() {
         navigator.serviceWorker.register("/sw.js").then(
           (registration) => {
             console.log("Service Worker registered with scope:", registration.scope);
+            toast({
+              title: "Service Worker registered",
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+            })
           },
           (error) => {
             console.log("Service Worker registration failed:", error);
+            toast({
+              title: "Service Worker registration failed",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+            })
           }
         );
       });
