@@ -27,7 +27,7 @@ function PushNotificationManager() {
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/sw.js").then(
+        navigator.serviceWorker.register("/service-worker.js").then(
           (registration) => {
             console.log("Service Worker registered with scope:", registration.scope);
             toast({
@@ -74,7 +74,13 @@ function PushNotificationManager() {
     })
 
     const registration = await navigator.serviceWorker.ready;
-    console.log('Service Worker ready:', registration);
+    toast({
+      title: "Service Worker ready",
+      description: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+      status: "info",
+      duration: 5000,
+      isClosable: true,
+    })
     const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY),
@@ -86,31 +92,6 @@ function PushNotificationManager() {
 
   const handleUnsubscribe = async () => {
     if (!subscription) return;
-
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/sw.js").then(
-          (registration) => {
-            console.log("Service Worker registered with scope:", registration.scope);
-            toast({
-              title: "Service Worker registered",
-              status: "success",
-              duration: 5000,
-              isClosable: true,
-            })
-          },
-          (error) => {
-            console.log("Service Worker registration failed:", error);
-            toast({
-              title: "Service Worker registration failed",
-              status: "error",
-              duration: 5000,
-              isClosable: true,
-            })
-          }
-        );
-      });
-    }
 
     await subscription.unsubscribe();
     console.log('Unsubscribed:', subscription);
@@ -124,10 +105,13 @@ function PushNotificationManager() {
     await sendNotification(message);
   };
 
+
   return (
     <div>
       <Text as="h1" fontFamily="heading">Support: {isSupported ? 'YES' : 'NO'}</Text>
       <Text as="h1" fontFamily="heading">{JSON.stringify(subscription)}</Text>
+      <Text as="h1" fontFamily="heading">Message: {process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY}</Text>
+      <Text as="h1" fontFamily="heading">Message: {process.env.VAPID_PRIVATE_KEY}</Text>
       <Button onClick={handleSubscribe} disabled={!!subscription}>Subscribe</Button>
       <Button onClick={handleUnsubscribe} disabled={!subscription}>Unsubscribe</Button>
       <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Notification message" />
