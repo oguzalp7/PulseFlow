@@ -18,7 +18,7 @@ self.addEventListener('push', function (event) {
   self.addEventListener('notificationclick', function (event) {
     console.log('Notification click received.')
     event.notification.close()
-    event.waitUntil(clients.openWindow('https://s4wgckgwcocsskocs0g04c84.la-vittoria.uk/'))
+    event.waitUntil(clients.openWindow('<https://your-website.com>'))
   })
 
   self.addEventListener('install', (event) => {

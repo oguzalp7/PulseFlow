@@ -6,6 +6,12 @@ import "../styles/global.css"
 
 import { ChakraProvider } from '@chakra-ui/react'
 
+
+
 export function Providers({ children }) {
-  return <ChakraProvider theme={theme}>{children}</ChakraProvider>
+  
+  
+  return <ChakraProvider theme={theme}>
+    {children}
+  </ChakraProvider>
 }
