@@ -2,6 +2,10 @@
 
 import webpush from 'web-push';
 
+// const vapidKeys = webpush.generateVAPIDKeys();
+
+// console.log(vapidKeys);
+
 webpush.setVapidDetails(
   'mailto:oguz@lavittoria.ai',
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
