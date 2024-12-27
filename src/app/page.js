@@ -63,6 +63,7 @@ function PushNotificationManager() {
           }
         );
       });
+    }
 
     const registration = await navigator.serviceWorker.ready;
     const subscription = await registration.pushManager.subscribe({
@@ -88,6 +89,7 @@ function PushNotificationManager() {
           }
         );
       });
+    }
 
     await subscription.unsubscribe();
     console.log('Unsubscribed:', subscription);
