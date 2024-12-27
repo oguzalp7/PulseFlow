@@ -66,30 +66,12 @@ function PushNotificationManager() {
   const handleSubscribe = async () => {
     if (!isSupported) return;
 
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/sw.js").then(
-          (registration) => {
-            console.log("Service Worker registered with scope:", registration.scope);
-            toast({
-              title: "Service Worker registered",
-              status: "success",
-              duration: 5000,
-              isClosable: true,
-            })
-          },
-          (error) => {
-            console.log("Service Worker registration failed:", error);
-            toast({
-              title: "Service Worker registration failed",
-              status: "error",
-              duration: 5000,
-              isClosable: true,
-            })
-          }
-        );
-      });
-    }
+    toast({
+      title: "Subscribing...",
+      status: "info",
+      duration: 5000,
+      isClosable: true,
+    })
 
     const registration = await navigator.serviceWorker.ready;
     const subscription = await registration.pushManager.subscribe({
