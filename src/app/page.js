@@ -144,6 +144,7 @@ function PushNotificationManager() {
   return (
     <div>
       <Text as="h1" fontFamily="heading">Support: {isSupported ? 'YES' : 'NO'}</Text>
+      <Text as="h1" fontFamily="heading">{JSON.stringify(subscription)}</Text>
       <Button onClick={handleSubscribe} disabled={!!subscription}>Subscribe</Button>
       <Button onClick={handleUnsubscribe} disabled={!subscription}>Unsubscribe</Button>
       <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Notification message" />
