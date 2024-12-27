@@ -74,6 +74,7 @@ function PushNotificationManager() {
     })
 
     const registration = await navigator.serviceWorker.ready;
+    console.log('Service Worker ready:', registration);
     const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY),
