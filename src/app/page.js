@@ -52,6 +52,18 @@ function PushNotificationManager() {
   const handleSubscribe = async () => {
     if (!isSupported) return;
 
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js").then(
+          (registration) => {
+            console.log("Service Worker registered with scope:", registration.scope);
+          },
+          (error) => {
+            console.log("Service Worker registration failed:", error);
+          }
+        );
+      });
+
     const registration = await navigator.serviceWorker.ready;
     const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
@@ -64,6 +76,18 @@ function PushNotificationManager() {
 
   const handleUnsubscribe = async () => {
     if (!subscription) return;
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js").then(
+          (registration) => {
+            console.log("Service Worker registered with scope:", registration.scope);
+          },
+          (error) => {
+            console.log("Service Worker registration failed:", error);
+          }
+        );
+      });
 
     await subscription.unsubscribe();
     console.log('Unsubscribed:', subscription);
