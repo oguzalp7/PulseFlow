@@ -31,8 +31,12 @@
     src: url('/fonts/Ubuntu-Condensed-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
+
   }
+
+
   
   html, body {
     font-family: 'Ubuntu Sans', sans-serif;
   }
+

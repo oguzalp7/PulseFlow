@@ -2,9 +2,7 @@
 
 import webpush from 'web-push';
 
-// const vapidKeys = webpush.generateVAPIDKeys();
-
-// console.log(vapidKeys);
+import { pfClient } from '@/pulseflowApiClient';
 
 webpush.setVapidDetails(
   'mailto:oguz@lavittoria.ai',
@@ -14,20 +12,37 @@ webpush.setVapidDetails(
 
 let subscription = null;
 
-export async function subscribeUser(sub) {
+export async function subscribeUser(sub, userId) {
   subscription = sub;
   console.log('Subscription stored:', subscription);
-  // In a production environment, you would want to store the subscription in a database
-  // For example: await db.subscriptions.create({ data: sub })
+
+  // Send the subscription to the server
+  try {
+    await pfClient.post('/subscriptions', {
+      userId,
+      subscription: JSON.stringify(sub),
+    });
+  } catch (error) {
+    console.error('Failed to store subscription:', error);
+    return { success: false, error: 'Failed to store subscription' };
+  }
+
   return { success: true };
 }
 
-export async function unsubscribeUser() {
+export async function unsubscribeUser(subscription) {
   subscription = null;
   console.log('Subscription removed');
-  // In a production environment, you would want to remove the subscription from the database
-  // For example: await db.subscriptions.delete({ where: { ... } })
-  return { success: true };
+  
+  // Send the subscription to the server
+  try {
+    const response = await pfClient.delete(`/subscriptions/${subscription.endpoint}`);
+    console.log('Subscription removed:', response.data);
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to remove subscription:', error);
+    return { success: false, error: 'Failed to remove subscription' };
+  }
 }
 
 export async function sendNotification(message) {
