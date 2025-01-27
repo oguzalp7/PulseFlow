@@ -3,20 +3,21 @@
 import { useContext, useState, useEffect } from "react";
 import UserContext from "@/contexts/user-context";
 import {useLanguage} from "@/contexts/language-context";
-import { Box, VStack, Image, Text, FormControl, FormLabel, Input, Button, Stack, Heading, HStack } from "@chakra-ui/react";
+import { Box, VStack, Image, Text, FormControl, FormLabel, Input, Button, Stack, Heading, HStack, IconButton } from "@chakra-ui/react";
 import LanguageDropdown from "@/components/language-dropdown.component";
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import PasswordInput from "@/components/password-input.component";
-import CookieConsent from "@/components/cookie-consent-banner.component";
+// import CookieConsent from "@/components/cookie-consent-banner.component";
 
-
+import { useRouter } from 'next/navigation';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 
 const GlowingNeonButton = ({ children, ...props }) => {
     return (
         <Button
             {...props}
             bgGradient="linear(to-r, green.400, green.700)"
-            color="purple.900"
+            color="gray.300"
             _hover={{
                 bgGradient: "linear(to-r, green.500, green.600)",
                 boxShadow: "0 0 40px rgba(0, 255, 0, 0.7)",
@@ -38,20 +39,20 @@ const LoginPage = () => {
     const { login } = useContext(UserContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const router = useRouter();
     const { language, changeLanguage, availableLanguages } = useLanguage();
 
-    useEffect(() => {
-        if (Cookies.get('cookiesAccepted')) {
-        //getGeolocation();
-        changeLanguage(Cookies.get('language') || 'tr');
-        // @TODO : dump the data into a file or database.
-        }
-    }, [changeLanguage]);
+    // useEffect(() => {
+    //     if (Cookies.get('cookiesAccepted')) {
+    //     //getGeolocation();
+    //     changeLanguage(Cookies.get('language') || 'tr');
+    //     // @TODO : dump the data into a file or database.
+    //     }
+    // }, [changeLanguage]);
 
-    const handleAcceptCookies = () => {
-        Cookies.set('cookiesAccepted', 'true', { expires: 7 });
-    };
+    // const handleAcceptCookies = () => {
+    //     Cookies.set('cookiesAccepted', 'true', { expires: 7 });
+    // };
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -61,24 +62,25 @@ const LoginPage = () => {
     return (
          
             <VStack spacing={[8]}  w='full'>
-            {!Cookies.get('cookiesAccepted')  && (<CookieConsent onAccept={handleAcceptCookies} />)}
+            {/* {!Cookies.get('cookiesAccepted')  && (<CookieConsent onAccept={handleAcceptCookies} />)} */}
                 <HStack w={['full', 'sm']} >
+                    <IconButton size={'lg'} color={'gray.300'} colorScheme='gray.900' variant={'ghost'} icon={<ArrowBackIcon />} onClick={() => router.push("/")} />
                     <LanguageDropdown/>
                 </HStack>
-                <Image boxSize={'300'} src="/icons/icon-192x192.png" alt="PulseFlow Logo" />
-                <Heading>{language == 'en' ? 'Welcome to Pulse Flow!' : "Pulse Flow I/O"}</Heading>
+                <Image boxSize={['200px', '300px']} src="/icons/icon-transparent-192x192.png" alt="PulseFlow Logo" />
+                <Heading color='gray.300'>{language == 'en' ? 'Welcome to Pulse Flow!' : "Pulse Flow I/O"}</Heading>
                 <form  onSubmit={handleLogin}>
                     <Stack  w='full' spacing={4}>
                         <FormControl isRequired>
                             <FormLabel>
-                                <Text as='b'>
+                                <Text as='b' color='gray.300'>
                                     {language == 'en' ? 'Username: ' : 'Kullanıcı Adı: '}
                                 </Text>
                             </FormLabel>
-                            <Input rounded='md' variant='filled' type="text" name="username" required placeholder="Kullanıcı Adı" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                            <Input bgColor='transparent' color='gray.300'  type="text" name="username" required placeholder="Kullanıcı Adı" value={username} onChange={(e) => setUsername(e.target.value)}/>
                         </FormControl>
                         <PasswordInput label={language == 'en' ? 'Password' : 'Şifre'} placeholder="Şifre" name={'password'} value={password} onChange={(e) => setPassword(e.target.value)}/>
-                        {/* <Button type="submit">{language == 'en' ? 'Sign-in' : 'Giriş'}</Button> */}
+                        
                         <GlowingNeonButton type="submit">
                             {language == 'en' ? 'Sign-in' : 'Giriş'}
                         </GlowingNeonButton>

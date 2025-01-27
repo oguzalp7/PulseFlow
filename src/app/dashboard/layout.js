@@ -1,8 +1,11 @@
 
 
 import React from 'react';
-import { Stack } from '@chakra-ui/react';
+import { Stack, Flex, Box } from '@chakra-ui/react';
 import Footer from "@/components/footer.component";
+import Navbar from "@/components/navbar.component";
+import Sidebar from "@/components/sidebar.component";
+import ProtectedRoute from '@/components/protected-route.component';
 
 export const metadata = {
     title: "Pulse Flow | Dashboard",
@@ -10,16 +13,22 @@ export const metadata = {
   };
 
 const DashboardLayout = ({ children }) => {
-    return (
-      
-      <Stack  w={'full'} h={'full'} >
-        <main>
-          {children}
-          <Footer/>
-        </main>
-      </Stack>
-      
-    );
-  };
-  
-  export default DashboardLayout;
+    
+  return (
+    <ProtectedRoute>
+      <Flex direction="column" w="full" h="full">
+        <Navbar pos='sticky' />
+        <Flex direction="row" flex="1">
+          <Sidebar />
+          <Box flex="1" p={4}>
+            {children}
+          </Box>
+        </Flex>
+        <Footer />
+      </Flex>
+    </ProtectedRoute>
+  );
+};
+
+export default DashboardLayout;
+

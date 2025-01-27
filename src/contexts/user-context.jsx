@@ -42,7 +42,7 @@ export const UserProvider = ({ children }) => {
             console.log(error)
             toast({
                 title: 'TR: Giriş Başarısız. / EN: Login Failed.',
-                description: error.response.data.detail,
+                description: JSON.stringify(error),
                 status: 'error',
                 //duration: 9000,
                 isClosable: true,
@@ -53,7 +53,7 @@ export const UserProvider = ({ children }) => {
     const logout = () => {
         setUser(null);
         delete pfClient.defaults.headers.common['Authorization']
-        router.push('/login')
+        router.push('/')
     };
     
     return (

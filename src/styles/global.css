@@ -38,5 +38,7 @@
   
   html, body {
     font-family: 'Ubuntu Sans', sans-serif;
+    color: #D1D5DB; /* gray.300 */
+    background-color: #F9FAFB; /* light background for better contrast */
   }
 

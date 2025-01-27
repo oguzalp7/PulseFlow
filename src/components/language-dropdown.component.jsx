@@ -12,10 +12,17 @@ const LanguageDropdown = () => {
         changeLanguage(newLanguage);
     };
 
+    // React.useEffect(() => {
+    //     const options = document.querySelectorAll('.chakra-select__wrapper option');
+    //     options.forEach(option => {
+    //         option.style.backgroundColor = 'transparent';
+    //     });
+    // }, []);
+
     return (
         <Select backgroundColor={'transparent'} color='green' textAlign='center' value={language} onChange={handleLanguageChange}>
         {availableLanguages.map((lang, index) => (
-            <option key={lang.id} value={lang.code}>
+            <option key={lang.id} value={lang.code}> 
                 {lang.name}
             </option>
         ))}

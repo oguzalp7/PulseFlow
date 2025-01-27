@@ -11,7 +11,7 @@ const PasswordInput = ({ label, placeholder, name, value, onChange }) => {
     return (
       <FormControl isRequired>
         <FormLabel htmlFor={name}>
-          <Text  as="b">
+          <Text  as="b" color="gray.300">
             {label}:
           </Text>
         </FormLabel>
@@ -23,12 +23,14 @@ const PasswordInput = ({ label, placeholder, name, value, onChange }) => {
             name={name}
             value={value}
             onChange={onChange}
+            color='gray.300'
+            bgColor='transparent'
           />
           <InputRightElement width="4.5rem">
             {/* <Button h="1.75rem" size="sm" onClick={handleClick}>
               {show ? "Gizle" : "Göster"}
             </Button> */}
-            <IconButton  h="1.75rem" size="sm" onClick={handleClick} icon={show ? <BiSolidHide/> : <BiSolidShow/> }/>
+            <IconButton rounded='full' bgColor='transparent' color='gray.500' h="1.75rem" size="sm" onClick={handleClick} icon={show ? <BiSolidHide/> : <BiSolidShow/> }/>
           </InputRightElement>
         </InputGroup>
       </FormControl>

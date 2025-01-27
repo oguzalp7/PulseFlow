@@ -15,16 +15,18 @@ export function Providers({ children }) {
   return <ChakraProvider theme={theme}>
     <LanguageProvider>
       <Box
-          minHeight="100vh"
+          maxHeight="200vh"
+          minHeight={"180vh"}
+          minWidth={['155vw', '100vw', '100vw', '100vw']}
           display="flex"
           flexDirection="column"
-          
+          w={'full'}
+          h={'full'}
           // //alignItems="center"
           bg="rgba(255, 255, 255, 0.8)"
           p={4}
           backgroundImage={`url('/images/bg.jpeg')`}
-        >
-          {children}
+        >{children}
       </Box>
     </LanguageProvider>
   </ChakraProvider>

@@ -1,8 +1,18 @@
 "use client"
 
-import { Text, Button, useToast } from "@chakra-ui/react";
+import { Text, Button, useToast, Box, HStack } from "@chakra-ui/react";
 import { useState, useEffect } from 'react';
 import { subscribeUser, unsubscribeUser, sendNotification } from './actions';
+
+import GlowingGreenNeonButton from "@/components/glowing-neon-green-button.component";
+import LanguageDropdown from "@/components/language-dropdown.component";
+import {useLanguage} from "@/contexts/language-context";
+
+import {useRouter} from 'next/navigation';
+
+import CookieConsent from "@/components/cookie-consent-banner.component";
+import Cookies from 'js-cookie';
+
 
 function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -121,9 +131,53 @@ function PushNotificationManager() {
 }
 
 export default function Home() {
+  const { language, changeLanguage, availableLanguages } = useLanguage();
+  const router = useRouter();
+
+  useEffect(() => {
+        if (Cookies.get('cookiesAccepted')) {
+        //getGeolocation();
+        changeLanguage(Cookies.get('language') || 'tr');
+        // @TODO : dump the data into a file or database.
+        }
+  }, [changeLanguage]);
+
+  const handleAcceptCookies = () => {
+      Cookies.set('cookiesAccepted', 'true', { expires: 7 });
+  };
+
+  const handleSignIn = () => {
+    router.push('/login');
+  };
+
+  const handleRegister = () => {
+    router.push('/register');
+  }
+
+
   return (
-    <div>
-      <PushNotificationManager />
-    </div>
+    <Box
+      // alignItems="flex-end"
+      // justifyContent="flex-end"
+      //mx="auto"
+      //my="auto"
+      p={4}
+      // border="1px solid"
+      display="flex"
+      alignItems="flex-start"
+      justifyContent="flex-end"
+    >
+    {!Cookies.get('cookiesAccepted')  && (<CookieConsent onAccept={handleAcceptCookies} />)}
+
+      <HStack spacing={4} w="md" >
+        <GlowingGreenNeonButton onClick={handleSignIn} >{language === 'en' ? 'Sign-in' : 'Giriş'}</GlowingGreenNeonButton>
+        <GlowingGreenNeonButton onClick={handleRegister} >{language === 'en' ? 'Register' : 'Kayıt Ol'}</GlowingGreenNeonButton>
+        <LanguageDropdown />
+        
+      </HStack>
+      
+      {/* <PushNotificationManager /> */}
+      
+    </Box>
   );
 }

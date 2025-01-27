@@ -1,7 +1,7 @@
 
 import { Providers } from "./providers";
 import { UserProvider } from "@/contexts/user-context";
-import Footer from "@/components/footer.component";
+
 
 export const metadata = {
   title: "Pulse Flow | Welcome",
@@ -12,12 +12,11 @@ export default function RootLayout({ children }) {
   
 
   return (
-    <html suppressHydrationWarning>
+    <html>
       <body>
         <Providers>
           <UserProvider>
             {children}
-            
           </UserProvider>
         </Providers>
       </body>
