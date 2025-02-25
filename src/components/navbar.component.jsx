@@ -184,9 +184,11 @@ import {
         align="center"
         justify={["center", "space-between", "flex-end", "flex-end"]}
         direction={["column", "column", "row", "row"]}
-        pt={[0, 4, 0, 0]}
+        pt={[4, 4, 0, 0]}
+        pl={[8, 4, 0, 0]}
+        pr={[8, 4, 0, 0]}
       >
-        <MenuItem to="/dashboard/home">
+        {/* <MenuItem to="/dashboard/home">
         {language === 'en' ? (
           <Stack align="center" spacing={2} direction={{ base: 'row', md: 'column' }}>
           <Icon color={'gray.300'} boxSize={8} as={FiHome} />
@@ -198,9 +200,9 @@ import {
           <Text as='u' color={'gray.300'}>Panel</Text>
           </Stack>
         )}
-        </MenuItem>
+        </MenuItem> */}
 
-        <MenuItem to="/dashboard/contact">
+        {/* <MenuItem to="/dashboard/contact">
         {language === 'en' ? (
           <Stack align="center" spacing={2} direction={{ base: 'row', md: 'column' }}>
           <Icon color={'green'} boxSize={8} as={FiPhoneOutgoing} />
@@ -212,9 +214,9 @@ import {
           <Text as='u' color='green'>İletişim</Text>
           </Stack>
         )}
-        </MenuItem>
+        </MenuItem> */}
 
-        <MenuItem to="/dashboard/logout">
+        {/* <MenuItem to="/dashboard/logout">
         {language === 'en' ? (
           <Stack align="center" spacing={2} direction={{ base: 'row', md: 'column' }}>
           <Icon color={'red.300'} boxSize={8} as={FiLogOut} />
@@ -226,7 +228,7 @@ import {
           <Text as='u' color={'red.300'}>Çıkış</Text>
           </Stack>
         )}
-        </MenuItem>
+        </MenuItem> */}
         <LanguageDropdown />
       </Stack>
       </Box>

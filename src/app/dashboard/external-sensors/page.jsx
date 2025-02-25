@@ -11,16 +11,15 @@ import useDeleteData from '@/hooks/useDeleteData';
 
 import { GrNext, GrPrevious } from "react-icons/gr";
 import CardGrid from '@/components/card-grid.component';
-import { Flex, Text, useToast, Spinner, Skeleton, Box, Stack, Select, HStack, VStack, IconButton } from '@chakra-ui/react';
+import { Flex, Text, useToast, Spinner, Skeleton, Stack, Select, HStack, VStack, IconButton } from '@chakra-ui/react';
 
-//import RelayCard from '@/depreciated-components/relay-card.component';
-import RelayCreateForm from '@/forms/relay-create.form';
+// import ExternalSensorCard from "@/depreciated-components/external-sensor-card.component";
+import ExternalSensorCreateForm from '@/forms/external-sensor-create.form';
 import CustomTabs from '@/components/CustomTabs';
-
 import CardLayout from '@/components/card-layout.component';
-import RelayCardContent from '@/card-contents/relay.card-content';
+import ExternalSensorCardContent from '@/card-contents/external-sensor.card-content';
 
-const RelaysPage = () => {
+const ExternalSensorsPage = () => {
     const { user } = useContext(UserContext);
     const { language } = useLanguage();
     const toast = useToast();
@@ -36,62 +35,64 @@ const RelaysPage = () => {
     const { data: devices, loading: devicesLoading, error: devicesError, setData: setDevices, refetch: refetchDevices } = useFetchData(`/devices/raw/project/${selectedProject}?page=${1}&size=${50}`);
     const [selectedDevice, setSelectedDevice] = useState(devices && devices.length > 0 ? devices[0].id : null);
 
-    const { data: relays, loading: relaysLoading, error: relaysError, setData: setRelays, refetch: refetchRelays } = useFetchData(`/relays/device/${selectedDevice}?page=${page}&size=${limit}`);
-    const { data: newRelay, loading: newRelayLoading, error: newRelayError, createData: createRelay } = useCreateData('/relays/raw/');
-    const { data: updatedRelay, loading: updatedRelayLoading, error: updatedRelayError, updateData: updateRelay } = useUpdateData('/relays/raw');
-    const { data: deletedRelay, loading: deletedRelayLoading, error: deletedRelayError, deleteData: deleteRelay } = useDeleteData('/relays/raw');
+    // Construct the query string with pagination parameters
+    const query = new URLSearchParams();
+    if (selectedProject) query.append('p', selectedProject);
+    if (selectedDevice) query.append('d', selectedDevice);
+    query.append('page', page);
+    query.append('limit', limit);
+
+    const { data: externalSensors, loading: externalSensorsLoading, error: externalSensorsError, setData: setExternalSensors, refetch: refetchExternalSensors } = useFetchData(`/external-sensors/?${query.toString()}`);
+
+    const { data: newExternalSensor, loading: newExternalSensorLoading, error: newExternalSensorError, createData: createExternalSensor } = useCreateData(`/external-sensors/raw/`);
+    const { data: updateExternalSensor, loading: updateExternalSensorLoading, error: updateExternalSensorError, updateData: updateExternalSensorData } = useUpdateData(`/external-sensors/raw`);
+    const { data: deleteExternalSensor, loading: deleteExternalSensorLoading, error: deleteExternalSensorError, deleteData: deleteExternalSensorData } = useDeleteData(`/external-sensors/raw`);
 
     const handleIncreasePage = () => setPage(page + 1);
     const handleDecreasePage = () => setPage(page - 1);
 
     useEffect(() => {
-        if (projects && !projectsLoading) {
+        if (projects && projects.length > 0) {
             setSelectedProject(projects[0].id);
         }
-    }, [projects, projectsLoading, projectsError]);
+    }, [projects]);
 
     useEffect(() => {
-        if (devices && !devicesLoading && devices.devices && devices.devices.length > 0) {
-            setSelectedDevice(devices.devices[0].id);
-        }
-    }, [selectedProject, devices, devicesLoading]);
-
-    useEffect(() => {
-        if (relays && relays.total >= relays.page * relays.size) {
+        if (externalSensors && externalSensors.total >= externalSensors.page * externalSensors.size) {
             setShowPagination(true);
         } else {
             setShowPagination(false);
         }
-    }, [selectedProject, selectedDevice, relays]);
+    }, [externalSensors, selectedDevice, selectedProject]);
 
-    const handleCreateRelay = async (data) => {
-        await createRelay(data);
-        if (newRelayError) {
+    const handleCreateExternalSensor = async (data) => {
+        try {
+            await createExternalSensor(data);
             toast({
-                title: language === 'en' ? 'Error' : 'Hata',
-                description: language === 'en' ? 'An error occurred while creating the relay.' : 'Röle oluşturulurken bir hata oluştu.',
-                status: 'error',
-                duration: 5000,
-                isClosable: true,
-            });
-        } else {
-            toast({
-                title: language === 'en' ? 'Success' : 'Başarılı',
-                description: language === 'en' ? 'Relay created successfully.' : 'Röle başarıyla oluşturuldu.',
+                title: language === 'en' ? 'External Sensor Created' : 'Harici Sensör Oluşturuldu',
+                description: language === 'en' ? 'External Sensor has been created successfully.' : 'Harici Sensör başarıyla oluşturuldu.',
                 status: 'success',
                 duration: 5000,
                 isClosable: true,
             });
-            refetchRelays();
+            refetchExternalSensors();
+        } catch (err) {
+            toast({
+                title: language === 'en' ? 'External Sensor Creation Failed' : 'Harici Sensör Oluşturulamadı',
+                description: err.message || (language === 'en' ? 'External Sensor could not be created.' : 'Harici Sensör oluşturulamadı.'),
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
         }
     };
 
-    const handleUpdateRelay = async (id, data) => {
-        await updateRelay(id, data);
-        if (updatedRelayError) {
+    const handleUpdateExternalSensor = async (id, data) => {
+        await updateExternalSensorData(id, data);
+        if (updateExternalSensorError) {
             toast({
                 title: language === 'en' ? 'Error' : 'Hata',
-                description: language === 'en' ? 'An error occurred while updating the relay.' : 'Röle güncellenirken bir hata oluştu.',
+                description: language === 'en' ? 'An error occurred while updating the external sensor.' : 'Harici sensör güncellenirken bir hata oluştu.',
                 status: 'error',
                 duration: 5000,
                 isClosable: true,
@@ -99,21 +100,21 @@ const RelaysPage = () => {
         } else {
             toast({
                 title: language === 'en' ? 'Success' : 'Başarılı',
-                description: language === 'en' ? 'Relay updated successfully.' : 'Röle başarıyla güncellendi.',
+                description: language === 'en' ? 'External sensor updated successfully.' : 'Harici sensör başarıyla güncellendi.',
                 status: 'success',
                 duration: 5000,
                 isClosable: true,
             });
-            refetchRelays();
+            refetchExternalSensors();
         }
     };
 
-    const handleDeleteRelay = async (id) => {
-        await deleteRelay(id);
-        if (deletedRelayError) {
+    const handleDeleteExternalSensor = async (id) => {
+        await deleteExternalSensorData(id);
+        if (deleteExternalSensorError) {
             toast({
                 title: language === 'en' ? 'Error' : 'Hata',
-                description: language === 'en' ? 'An error occurred while deleting the relay.' : 'Röle silinirken bir hata oluştu.',
+                description: language === 'en' ? 'An error occurred while deleting the external sensor.' : 'Harici sensör silinirken bir hata oluştu.',
                 status: 'error',
                 duration: 5000,
                 isClosable: true,
@@ -121,18 +122,18 @@ const RelaysPage = () => {
         } else {
             toast({
                 title: language === 'en' ? 'Success' : 'Başarılı',
-                description: language === 'en' ? 'Relay deleted successfully.' : 'Röle başarıyla silindi.',
+                description: language === 'en' ? 'External sensor deleted successfully.' : 'Harici sensör başarıyla silindi.',
                 status: 'success',
                 duration: 5000,
                 isClosable: true,
             });
-            refetchRelays();
+            refetchExternalSensors();
         }
     };
 
     const tabs = [
         {
-            label: language === 'en' ? 'Relays' : 'Röleler',
+            label: language === 'en' ? 'External Sensors' : 'Harici Sensörler',
             content: (
                 <>
                     <Stack flexDir={['column', 'row']} spacing={4} align='center' justify='center'>
@@ -168,46 +169,43 @@ const RelaysPage = () => {
                         )}
                     </Stack>
                     <br />
-                    {relaysLoading ? (
+                    {externalSensorsLoading && (
                         <Flex align='center' justify='center' direction='column'>
                             <Spinner size="xl" color="green.500" />
                             <Skeleton height="20px" />
                         </Flex>
-                    ) : relays && relays.relays && relays.relays.length > 0 ? (
+                    )}
+                    {externalSensors && !externalSensorsLoading && externalSensors.external_sensors && externalSensors.external_sensors.length > 0 && (
                         <CardGrid>
-                            {relays.relays.map((relay, index) => (
-                                // <RelayCard key={index} relay={relay} onUpdate={handleUpdateRelay} onDelete={handleDeleteRelay} />
-                                <CardLayout
-                                    key={index}
-                                    cardChildren={<RelayCardContent relay={relay} />}
-                                    FormComponent={RelayCreateForm}
-                                    onEdit={handleUpdateRelay}
-                                    onDelete={handleDeleteRelay}
-                                    data={relay}
+                            {externalSensors.external_sensors.map((externalSensor, index) => (
+                                // <ExternalSensorCard key={index} externalSensor={externalSensor} onUpdate={handleUpdateExternalSensor} onDelete={handleDeleteExternalSensor} />
+                                <CardLayout 
+                                    key={index} 
+                                    data={externalSensor} 
+                                    onEdit={handleUpdateExternalSensor} 
+                                    onDelete={handleDeleteExternalSensor} 
+                                    FormComponent={ExternalSensorCreateForm}
+                                    cardChildren={<ExternalSensorCardContent externalSensor={externalSensor} />}
                                 />
                             ))}
                         </CardGrid>
-                    ) : (
-                        <Flex align='center' justify='center' direction='column'>
-                            <Text color='gray.500'>{language === 'en' ? 'No relays found.' : 'Röle bulunamadı.'}</Text>
-                        </Flex>
                     )}
                     {showPagination && (
                         <VStack>
                             <HStack>
                                 {page > 1 && <IconButton variant={'ghost'} color={'green.500'} onClick={handleDecreasePage} icon={<GrPrevious />} />}
-                                {relays && relays.total >= relays.page * relays.size && <IconButton variant={'ghost'} color={'green.500'} onClick={handleIncreasePage} icon={<GrNext />} />}
+                                {externalSensors && externalSensors.total >= externalSensors.page * externalSensors.size && <IconButton variant={'ghost'} color={'green.500'} onClick={handleIncreasePage} icon={<GrNext />} />}
                             </HStack>
                             <HStack justifyContent='center' mt={4}>
                                 <Text color='gray.500'>{language === 'en' ? 'Page' : 'Sayfa'}</Text>
                                 <Text color='gray.500'>{page}</Text>
                                 <Text color='gray.500'>{language === 'en' ? 'of' : '/'}</Text>
-                                <Text color='gray.500'>{relays && relays.total && Math.ceil(relays.total / relays.size)}</Text>
+                                <Text color='gray.500'>{externalSensors && externalSensors.total && Math.ceil(externalSensors.total / externalSensors.size)}</Text>
                             </HStack>
                             <HStack>
                                 <Text color='gray.500'>{language === 'en' ? 'Total' : 'Toplam'}</Text>
-                                <Text color='gray.500'>{relays && relays.total}</Text>
-                                <Text color='gray.500'>{language === 'en' ? 'Actuators' : 'Aktüatör'}</Text>
+                                <Text color='gray.500'>{externalSensors && externalSensors.total}</Text>
+                                <Text color='gray.500'>{language === 'en' ? 'Sensors' : 'Sensörler'}</Text>
                             </HStack>
                         </VStack>
                     )}
@@ -218,12 +216,12 @@ const RelaysPage = () => {
 
     if (user && user.auth_id > 3) {
         tabs.unshift({
-            label: language === 'en' ? 'New Relay' : 'Yeni Röle',
-            content: <RelayCreateForm onSubmit={handleCreateRelay} />,
+            label: language === 'en' ? 'New External Sensor' : 'Yeni Harici Sensör',
+            content: <ExternalSensorCreateForm onSubmit={handleCreateExternalSensor} />,
         });
     }
 
     return <CustomTabs tabs={tabs} />;
 };
 
-export default RelaysPage;
+export default ExternalSensorsPage;

@@ -36,7 +36,8 @@ import { GiRobotGrab } from "react-icons/gi";
 import { IoIosSwitch } from "react-icons/io";
 import { MdOutlineMonitorHeart, MdMonitorHeart } from "react-icons/md";
 
-
+import { ImStack } from "react-icons/im";
+import { BsClipboardData } from "react-icons/bs";
 
 import NextLink from 'next/link';
 
@@ -163,14 +164,15 @@ const Sidebar = () => {
                 />
                 
                 <NavItem navSize={navSize} icon={FiHome} title={language == 'en' ? 'Dashboard' : 'Pano'} href={'/dashboard/home'}/>
-                <NavItem navSize={navSize} icon={AiOutlineProject} title={language == 'en' ? 'Projects' : 'Projeler'} href={'/dashboard/projects'}/>
+                <NavItem navSize={navSize} icon={ImStack } title={language == 'en' ? 'Projects' : 'Projeler'} href={'/dashboard/projects'}/>
                 <NavItem navSize={navSize} icon={LuBrainCircuit} title={language == 'en' ? 'Devices' : 'Cihazlar'} href={'/dashboard/devices'}/>
                 <NavItem navSize={navSize} icon={GiRobotGrab } title={language == 'en' ? 'Actuators' : 'Aktüatörler'} href={'/dashboard/actuators'}/>
                 <NavItem navSize={navSize} icon={IoIosSwitch  } title={language == 'en' ? 'Relays' : 'Röleler'} href={'/dashboard/relays'}/>
                 <NavItem navSize={navSize} icon={MdMonitorHeart} title={language == 'en' ? 'Internal Sensors' : 'Dahili Sensörler'}  href={'/dashboard/internal-sensors'}/>
-                <NavItem navSize={navSize} icon={MdOutlineMonitorHeart} title={language == 'en' ? 'External Sensor' : 'Harici Sensörler'}  href={'/dashboard/internal-sensors'}/>
-
-                <NavItem navSize={navSize} icon={FiCalendar} title={language == 'en' ? 'Automations' : 'Otomasyonlar'} href={'/dashboard/home'}/>
+                <NavItem navSize={navSize} icon={MdOutlineMonitorHeart} title={language == 'en' ? 'External Sensor' : 'Harici Sensörler'}  href={'/dashboard/external-sensors'}/>
+                
+                <NavItem navSize={navSize} icon={BsClipboardData} title={language == 'en' ? 'Logs' : 'Loglar'} href={'/dashboard/logs'}/>
+                <NavItem navSize={navSize} icon={FiCalendar} title={language == 'en' ? 'Automations' : 'Otomasyonlar'} href={'/dashboard/automations'}/>
                 <NavItem navSize={navSize} icon={FiUser} title={language == 'en' ? 'User' : 'Kullanıcı'} href={'/dashboard/home'}/>
                 <NavItem navSize={navSize} icon={FiSettings} title={language == 'en' ? 'Settings' : 'Ayarlar'} href={'/dashboard/home'}/>
                 <NavItem navSize={navSize} icon={FiPhoneOutgoing} title={language == 'en' ? 'Contact' : 'İletişim'} href={'/dashboard/home'}/>

@@ -10,11 +10,16 @@ import UserContext from '@/contexts/user-context';
 import { useLanguage } from '@/contexts/language-context';
 import GlowingGreenNeonButton from '@/components/glowing-neon-green-button.component';
 
+// Schema güncellemesi: is_out_of_order alanında transform ekleniyor
 const schema = yup.object().shape({
     name: yup.string().min(3, "Name must be at least 3 characters long"),
     circuit_type: yup.string().oneOf(['sealed', 'switch']).default('sealed'),
     state: yup.number().min(0).max(1).required(),
-    is_out_of_order: yup.boolean().default(false),
+    is_out_of_order: yup.boolean().default(false).transform((value, originalValue) => {
+        if (originalValue === "true") return true;
+        if (originalValue === "false") return false;
+        return value;
+    }),
     project_id: yup.number().positive().required(),
 });
 
