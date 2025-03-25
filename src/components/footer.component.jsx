@@ -10,7 +10,7 @@ const Footer = () => {
         <Text fontSize="sm" color={'gray.500'} >
           &copy; {new Date().getFullYear()} <a href='https://lavittoria.ai'>La Vittoria AI</a>. All rights reserved.
         </Text>
-        <Image alt='La Vittoria Logo' src='https://lavittoria.ai/img/LV.png' boxSize='50px'/>
+        <Image alt='La Vittoria Logo' src="/images/LV.png" boxSize='50px'/>
     </VStack>
     
 

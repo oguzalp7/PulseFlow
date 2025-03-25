@@ -159,24 +159,7 @@ const ProjectsPage = () => {
                 </>
             )
         },
-        // {
-        //     label: language === 'en' ? 'Project Users' : 'Proje Kullanıcıları',
-        //     content: (
-        //         <>
-        //             {projectsLoading && <Spinner color='green' size={'xl'} />}
-        //             {projects && (
-        //                 <Select color={'green'} backgroundColor={'rgba(127, 127, 127, 0.2)'} textAlign={'center'} placeholder='Select Project' onChange={(e) => setSelectedProject(e.target.value)} value={selectedProject}>
-        //                     {projects && projects.map((project, index) => (
-        //                         <option key={index} value={project.id}>
-        //                             {project.name}
-        //                         </option>
-        //                     ))}
-        //                 </Select>
-        //             )}
-        //             {selectedProject && <ProjectUsers projectId={selectedProject} />}
-        //         </>
-        //     )
-        // },
+        
     ];
 
     return <CustomTabs tabs={tabs} />;

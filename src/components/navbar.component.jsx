@@ -29,7 +29,8 @@ import {
              <Image 
               boxSize={['60px', '80px', '90px', '90px']}
               objectFit='cover' 
-              src="https://lavittoria.ai/img/LV.png"
+              // src="https://lavittoria.ai/img/LV.png"
+              src="/images/LV.png"
               onClick={() =>{
                 console.log('image')
                 window.location.href = '/'

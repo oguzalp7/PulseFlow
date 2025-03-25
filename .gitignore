@@ -43,3 +43,5 @@ next-env.d.ts
 certificates
 
 /src/depreciated-components
+
+temp_env

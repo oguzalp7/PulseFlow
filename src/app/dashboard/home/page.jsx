@@ -63,7 +63,7 @@ const DashboardHomePage = () => {
     return (
       
       <Box p={4}>
-        
+       
         <HStack mt={2} spacing={4} align='center' justify='center'>
             {projectsLoading && (
               <Flex align='center' justify='center' direction='column'>
