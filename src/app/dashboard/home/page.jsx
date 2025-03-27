@@ -44,13 +44,13 @@ const DashboardHomePage = () => {
 
     const { data: outputs, loading: outputsLoading, error: outputsError, refetch: fetchOutputs } = useFetchData(`/outputs/project/${selectedProject}/actuator_cards?outOfOrder=false&page=${page}&size=${limit}`);
 
-    useEffect(() => {
-      const interval = setInterval(() => {
-        fetchOutputs();
-      }, 3000); // 30000 milliseconds = 30 seconds
+    // useEffect(() => {
+    //   const interval = setInterval(() => {
+    //     fetchOutputs();
+    //   }, 5000); // 30000 milliseconds = 30 seconds
 
-      return () => clearInterval(interval); // Cleanup interval on component unmount
-    }, [fetchOutputs]);
+    //   return () => clearInterval(interval); // Cleanup interval on component unmount
+    // }, [fetchOutputs]);
 
     useEffect(() => {
       if(outputs && outputs.total >= outputs.page * outputs.size ) {

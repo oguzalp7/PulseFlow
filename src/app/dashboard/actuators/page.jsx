@@ -192,6 +192,10 @@ const ActuatorsPage = () => {
         }
     ];
 
+    if(user.auth_id < 3){
+        tabs.shift();
+    }
+
     return <CustomTabs tabs={tabs} />;
 };
 

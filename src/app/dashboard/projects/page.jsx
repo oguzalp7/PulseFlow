@@ -26,7 +26,7 @@ const ProjectsPage = () => {
     const { updateData } = useUpdateData('/projects/raw');
     const { deleteData } = useDeleteData('/projects/raw');
     const [selectedProject, setSelectedProject] = useState(projects && projects.length > 0 ? projects[0].id : null);
-
+    
     useEffect(() => {
         if (projects && !projectsLoading) {
             setSelectedProject(projects[0].id);
@@ -161,6 +161,10 @@ const ProjectsPage = () => {
         },
         
     ];
+
+    if(user.auth_id < 3){
+        tabs.shift();
+    }
 
     return <CustomTabs tabs={tabs} />;
 };

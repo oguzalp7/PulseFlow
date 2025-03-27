@@ -13,6 +13,7 @@ import CustomTabs from '@/components/CustomTabs';
 import AutomationConditionCreateForm from '@/forms/automation-condition-create.form';
 import useCreateData from '@/hooks/useCreateData';
 import useFetchData from '@/hooks/useFetchData';
+import useDeleteData from '@/hooks/useDeleteData';
 
 import CardLayout from '@/components/card-layout.component';
 import AutomationConditionCardContent from './automation-condition.card-content';
@@ -25,6 +26,9 @@ const AutomationCardContent = ({ automation, refetch }) => {
 
     const { data: condition, loading: conditionLoading, error: conditionError, createData: createCondition } = useCreateData('/conditions/raw/');
     const { data: conditions, loading: conditionsLoading, error: conditionsError, refetch: refetchConditions } = useFetchData(`/conditions/raw/automation/${automation.id}`);
+
+    const { data: conditionDelete, loading: conditionDeleteLoading, error: conditionDeleteError, deleteData } = useDeleteData('/conditions/raw');
+    const { data: conditionUpdate, loading: conditionUpdateLoading, error: conditionUpdateError, updateData: updateCondition } = useUpdateData('/conditions/raw/');
     
     const handleToggleActive = async () => {
         const updatedAutomation = { ...automation, is_active: !automation.is_active };
@@ -51,7 +55,7 @@ const AutomationCardContent = ({ automation, refetch }) => {
     const handleCreateCondition = async (data) => {
         console.log(data);
         try {
-            //await createCondition(data);
+            await createCondition(data);
             refetchConditions();
             toast({
                 title: language === 'en' ? 'Condition created successfully.' : 'Kondisyon başarıyla oluşturuldu.',
@@ -72,8 +76,29 @@ const AutomationCardContent = ({ automation, refetch }) => {
 
     const handleUpdateCondition = async (id, data) => {
     };
-    
 
+    const handleDeleteCondition = async (id) => {
+        try {
+            await deleteData(id);
+            refetchConditions();
+            toast({
+                title: language === 'en' ? 'Condition deleted successfully.' : 'Kondisyon başarıyla silindi.',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+            });
+        } catch (error) {
+            console.log(error);
+            toast({
+                title: language === 'en' ? 'Error deleting condition.' : 'Kondisyon silinirken hata oluştu.',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
+        }
+    };
+    
+    console.log(conditions);
     const tabs = [
         { label: language === 'en' ? 'Conditions' : 'Koşullar', content: (
             <Box  borderRadius='lg' p={4} w='100%'>
@@ -81,6 +106,8 @@ const AutomationCardContent = ({ automation, refetch }) => {
                     <CardLayout 
                         key={index} 
                         data={condition} 
+                        onDelete={handleDeleteCondition}
+                        onEdit={handleUpdateCondition}
                         FormComponent={AutomationConditionCreateForm} 
                         formProps={{automation}} 
                         cardChildren={
@@ -96,7 +123,7 @@ const AutomationCardContent = ({ automation, refetch }) => {
     return (
         <>
         <Heading size='md'>{automation.name}</Heading>
-        <Text>{language === 'en' ? 'Output: ' : 'Çıkış: '} {automation.output_name}</Text>
+        <Text color={'white'} colorScheme='white'>{language === 'en' ? 'Output: ' : 'Çıkış: '} {automation.output_name}</Text>
         <Text>{language === 'en' ? 'Project: ' : 'Proje: '} {automation.project_name}</Text>
         <Text>{language === 'en' ? 'Automation Type: ' : 'Otomasyon Tipi: '} {automation.automation_type}</Text>
         <Text>{language === 'en' ? 'Desired State: ' : 'İstenen Durum: '} {automation.desired_state}</Text>

@@ -133,6 +133,10 @@ const InternalSensorsPage = () => {
 
     const tabs = [
         {
+            label: language === 'en' ? 'New Internal Sensor' : 'Yeni Dahili Sensör',
+            content: <InternalSensorCreateForm onSubmit={handleCreateInternalSensor} />,
+        },
+        {
             label: language === 'en' ? 'Sensors' : 'Sensörler',
             content: (
                 <>
@@ -193,11 +197,12 @@ const InternalSensorsPage = () => {
                 </>
             ),
         },
-        {
-            label: language === 'en' ? 'New Internal Sensor' : 'Yeni Dahili Sensör',
-            content: <InternalSensorCreateForm onSubmit={handleCreateInternalSensor} />,
-        },
+        
     ];
+
+    if(user.auth_id < 3){
+        tabs.shift();
+    }
 
     return (
         <CustomTabs tabs={tabs} />

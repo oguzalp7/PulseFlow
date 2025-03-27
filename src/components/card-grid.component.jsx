@@ -6,8 +6,8 @@ import { SimpleGrid, Box, Button, HStack, Skeleton, Text } from '@chakra-ui/reac
 
 const CardGrid = ({children}) => {
     return(
-        <Box>
-            <SimpleGrid columns={[1, 2, 3]} spacing={6}>
+        <Box h={'140vh'} maxH={"150vh"} overflow={"auto"} >
+            <SimpleGrid columns={[1, 2, 3]}  spacing={6}>
                 {children}
             </SimpleGrid>
         </Box>

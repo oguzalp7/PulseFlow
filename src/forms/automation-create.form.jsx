@@ -59,6 +59,8 @@ const AutomationCreateForm = ({ onSubmit, defaultValues }) => {
         }
     }, [defaultValues, setValue]);
 
+    console.log(outputs);
+
     return (
         <Box p={4} as="form" onSubmit={handleSubmit(onSubmit)}>
             <FormSelect
