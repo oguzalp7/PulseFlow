@@ -10,6 +10,8 @@ import UserContext from '@/contexts/user-context';
 import { useLanguage } from '@/contexts/language-context';
 import GlowingGreenNeonButton from '@/components/glowing-neon-green-button.component';
 
+import { optionStyle } from '@/utils';
+
 // Schema güncellemesi: is_out_of_order alanında transform ekleniyor
 const schema = yup.object().shape({
     name: yup.string().min(3, "Name must be at least 3 characters long"),
@@ -54,8 +56,8 @@ const ActuatorCreateForm = ({ onSubmit, defaultValues }) => {
                         control={control}
                         render={({ field }) => (
                             <Select textAlign={'center'} color={'lime'} focusBorderColor='lime' placeholder={language === 'en' ? 'Please select your circuit type.' : 'Devre tipinizi seçiniz.'} _placeholder={{opacity: 0.4, color: 'inherit'}} {...field}>
-                                <option value="sealed">Sealed</option>
-                                <option value="switch">Switch</option>
+                                <option style={optionStyle} value="sealed">Sealed</option>
+                                <option style={optionStyle} value="switch">Switch</option>
                             </Select>
                         )}
                     />
@@ -79,8 +81,8 @@ const ActuatorCreateForm = ({ onSubmit, defaultValues }) => {
                         control={control}
                         render={({ field }) => (
                             <Select textAlign={'center'} color={'lime'} focusBorderColor='lime' placeholder={language === 'en' ? 'Please select if the actuator is out of order.' : 'Aktüatörün arızalı olup olmadığını seçiniz.'} _placeholder={{opacity: 0.4, color: 'inherit'}} {...field}>
-                                <option value={true}>Yes</option>
-                                <option value={false}>No</option>
+                                <option style={optionStyle} value={true}>Yes</option>
+                                <option style={optionStyle} value={false}>No</option>
                             </Select>
                         )}
                     />
@@ -94,7 +96,7 @@ const ActuatorCreateForm = ({ onSubmit, defaultValues }) => {
                         render={({ field }) => (
                             <Select textAlign={'center'} color={'lime'} focusBorderColor='lime' placeholder={language === 'en' ? 'Please select your project.' : 'Projenizi seçiniz.'} _placeholder={{opacity: 0.4, color: 'inherit'}} {...field}>
                                 {projects && projects.map((project, index) => (
-                                    <option key={index} value={project.id}>
+                                    <option style={optionStyle} key={index} value={project.id}>
                                         {project.name}
                                     </option>
                                 ))}

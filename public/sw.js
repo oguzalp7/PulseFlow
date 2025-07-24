@@ -42,7 +42,7 @@ self.addEventListener('push', function (event) {
   });
   
   self.addEventListener('fetch', (event) => {
-    console.log('Fetch intercepted for:', event.request.url);
+    // console.log('Fetch intercepted for:', event.request.url);
     event.respondWith(
       caches.match(event.request).then((response) => {
         return response || fetch(event.request);

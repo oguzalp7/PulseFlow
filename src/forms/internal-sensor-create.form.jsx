@@ -9,7 +9,7 @@ import useFetchData from '@/hooks/useFetchData';
 import UserContext from '@/contexts/user-context';
 import { useLanguage } from '@/contexts/language-context';
 import GlowingGreenNeonButton from '@/components/glowing-neon-green-button.component';
-
+import { optionStyle } from '@/utils';
 
 const schema = yup.object().shape({
     name: yup.string().min(3, 'Name must be at least 3 characters').required('Name is required'),
@@ -57,7 +57,7 @@ const InternalSensorCreateForm = ({onSubmit, defaultValues}) => {
             {projects && !projectsLoading && (
                 <Select color={'green'} backgroundColor={'rgba(127, 127, 127, 0.2)'} textAlign={'center'} placeholder={language === 'en' ? 'Select Project.' : 'Proje Seçiniz.'} onChange={(e) => setSelectedProject(e.target.value)} value={selectedProject}>
                     {projects && projects.map((project, index) => (
-                        <option key={index} value={project.id}>
+                        <option style={optionStyle} key={index} value={project.id}>
                             {project.name}
                         </option>
                     ))}
@@ -113,9 +113,9 @@ const InternalSensorCreateForm = ({onSubmit, defaultValues}) => {
                         name="sensor_type"
                         control={control}
                         render={({ field }) => <Select color={'lime'} focusBorderColor='lime' placeholder={language === 'en' ? 'Select Sensor Type.' : 'Sensör Tipi Seçiniz.'} {...field}>
-                            <option value="ammeter">{language === 'en' ? 'Ammeter' : 'Ampermetre'}</option>
-                            <option value="voltmeter">{language === 'en' ? 'Voltmeter' : 'Voltmetre'}</option>
-                            <option value="pressure">{language === 'en' ? 'Pressure' : 'Basınç'}</option>
+                            <option style={optionStyle} value="ammeter">{language === 'en' ? 'Ammeter' : 'Ampermetre'}</option>
+                            <option style={optionStyle} value="voltmeter">{language === 'en' ? 'Voltmeter' : 'Voltmetre'}</option>
+                            <option style={optionStyle} value="pressure">{language === 'en' ? 'Pressure' : 'Basınç'}</option>
                         </Select>}
                     />
                     <Text as={'b'} color="red.500">{errors.sensor_type?.message}</Text>
@@ -128,7 +128,7 @@ const InternalSensorCreateForm = ({onSubmit, defaultValues}) => {
                         control={control}
                         render={({ field }) => <Select color={'lime'} focusBorderColor='lime' placeholder={language === 'en' ? 'Select Device' : 'Cihaz Seçiniz.'} {...field}>
                             {devices && devices.devices.map((device, index) => (
-                                <option key={index} value={device.id}>
+                                <option style={optionStyle} key={index} value={device.id}>
                                     {device.name}
                                 </option>
                             ))}
@@ -145,7 +145,7 @@ const InternalSensorCreateForm = ({onSubmit, defaultValues}) => {
                         control={control}
                         render={({ field }) => <Select color={'lime'} focusBorderColor='lime' placeholder={language === 'en' ? 'Select Output.' : 'Çıkış Seçiniz.'} {...field}>
                             {outputs && outputs.outputs.map((output, index) => (
-                                <option key={index} value={output.id}>
+                                <option style={optionStyle} key={index} value={output.id}>
                                     {output.name}
                                 </option>
                             ))}

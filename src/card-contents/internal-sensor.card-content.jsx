@@ -14,22 +14,22 @@ const InternalSensorCardContent = ({ internalSensor }) => {
 
     return (
         <>
-        <Heading as="h3" size="lg">
+        <Heading as="h3" size="lg" color={'white'}>
             {internalSensor.name}
         </Heading>
-        <Text>
+        <Text color={'white'}>
             {internalSensor.description}
         </Text>
-        <Text>
+        <Text color={'white'}>
             {internalSensor.value} {internalSensor.units_of_measure}
         </Text>
-        <Text>
+        <Text color={'white'}>
             {internalSensor.sensor_type}
         </Text>
-        <Text>
+        <Text color={'white'}>
             {deviceData && deviceData.name}
         </Text>
-        <Text>
+        <Text color={'white'}>
             {outputData && outputData.name}
         </Text>
         </>

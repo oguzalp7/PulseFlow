@@ -7,15 +7,23 @@ import useFetchData from '@/hooks/useFetchData';
 import useCreateData from '@/hooks/useCreateData';
 import useUpdateData from '@/hooks/useUpdateData';
 import useDeleteData from '@/hooks/useDeleteData';
+
+import ButtonTriggeredModal from '@/components/modal.component';
+
 // import ProjectCard from '@/components/project-card.component';
 import ProjectCreateForm from '@/forms/project-create.form';
-import { Flex, Text, useToast, Spinner, SkeletonText, Box, Select } from '@chakra-ui/react';
+import { Flex, Text, useToast, Spinner, SkeletonText, Box, Select, Stack } from '@chakra-ui/react';
 import CardGrid from '@/components/card-grid.component';
 import ProjectUsers from '@/components/project-users.component';
+import InvitationsComponent from '@/components/invitations.component';
 import CustomTabs from '@/components/CustomTabs';
 
 import CardLayout from '@/components/card-layout.component';
 import ProjectCardContent from '@/card-contents/project.card-content';
+import ProjectInvitationForm from '@/forms/project-invitation.form';
+
+import { EmailIcon } from "@chakra-ui/icons";
+import { MdGroupAdd } from "react-icons/md";
 
 const ProjectsPage = () => {
     const { user } = useContext(UserContext);
@@ -26,9 +34,15 @@ const ProjectsPage = () => {
     const { updateData } = useUpdateData('/projects/raw');
     const { deleteData } = useDeleteData('/projects/raw');
     const [selectedProject, setSelectedProject] = useState(projects && projects.length > 0 ? projects[0].id : null);
-    
+    const [invitationURL, setInvitationURL] = useState(`/projects/${selectedProject}/invite`)
+    const { data: invitations, loading: invitationsLoading, error: invitationsError, createData: createInvitation } = useCreateData(invitationURL);
+
     useEffect(() => {
-        if (projects && !projectsLoading) {
+        setInvitationURL(`/projects/${selectedProject}/invite`);
+    }, [selectedProject]);
+
+    useEffect(() => {
+        if (projects && !projectsLoading && projects[0] && projects[0].id) {
             setSelectedProject(projects[0].id);
         }
     }, [projects, projectsLoading, projectsError]);
@@ -112,10 +126,46 @@ const ProjectsPage = () => {
         }
     }, [projects]);
 
+    const handleSubmitInvitation = async (formData) => {
+        // console.log(formData)
+        // console.log(selectedProject)
+        
+        await createInvitation(formData);
+        console.log(invitationsError);
+        if (!invitationsError) {
+            toast({
+                title: language === 'en' ? 'Project invitation sent successfully.' : 'Proje davetiyesi gönderildi.',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+            });
+        } else {
+            console.log(error);
+            toast({
+                title: language === 'en' ? 'Error sending project invitation.' : 'Proje gönderilemedi.',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
+        }
+    }
+
+
+    const optionStyle = {
+        backgroundColor: '#1A202C', // dark background
+        color: '#68D391',           // green text
+        padding: '8px',
+        fontWeight: 'bold',
+    };
+
     const tabs = [
         {
             label: user && user.auth_id > 3 ? (language === 'en' ? 'New Project' : 'Yeni Proje') : '',
             content: user && user.auth_id > 3 && <ProjectCreateForm onSubmit={handleCreateProject} />
+        },
+        {
+            label: language === 'en' ? 'Project Invitations' : 'Proje Davetleri',
+            content: <InvitationsComponent />
         },
         {
             label: language === 'en' ? 'Projects' : 'Projelerim',
@@ -146,15 +196,26 @@ const ProjectsPage = () => {
             content: (
                 <>
                     {projectsLoading && <Spinner color='green' size={'xl'} />}
-                    {projects && (
-                        <Select color={'green'} backgroundColor={'rgba(127, 127, 127, 0.2)'} textAlign={'center'} placeholder='Select Project' onChange={(e) => setSelectedProject(e.target.value)} value={selectedProject}>
+                    <Stack flexDirection={['column', 'row']} justifyContent={'space-between'} alignItems={'center'} width={'100%'}>
+                        {projects && (
+                        <Select color={'green'} backgroundColor={'rgba(127, 127, 127, 0.2)'} textAlign={'center'}  onChange={(e) => setSelectedProject(e.target.value)} value={selectedProject}>
+                            <option style={optionStyle} value=''>{language === 'en' ? 'Select Project' : 'Proje Seçiniz.'}</option>
                             {projects && projects.map((project, index) => (
-                                <option key={index} value={project.id}>
+                                <option style={optionStyle} key={index} value={project.id}>
                                     {project.name}
                                 </option>
                             ))}
                         </Select>
                     )}
+                    <br/>
+                    {selectedProject && (
+                        <ButtonTriggeredModal
+                            buttonTitle={language === 'en' ? 'Invite User' : 'Davet Et'} 
+                            leftIcon={<MdGroupAdd />} 
+                            modalTitle={language === 'en' ? 'Invitation Form' : 'Davetiye Formu'}
+                            children={<ProjectInvitationForm projects={projects} selectedProject={selectedProject} onSubmit={handleSubmitInvitation}/>}
+                        />)}
+                    </Stack>
                     {selectedProject && <ProjectUsers projectId={selectedProject} />}
                 </>
             )

@@ -1,15 +1,17 @@
 "use client";
 
 import React, { useState, useEffect, useContext } from 'react'
-import { Card, CardHeader, CardBody, CardFooter, Spinner, HStack, Flex, VStack, Image, Skeleton, SkeletonText, Text, useToast } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, CardFooter, Spinner, HStack, Flex, VStack, Image, Skeleton, SkeletonText, Text, useToast, Divider } from '@chakra-ui/react'
 import { useLanguage } from '@/contexts/language-context';
 import  useFetchData  from '@/hooks/useFetchData';
 import CircleButton from './circle-button.component';
 
 import {pfClient} from '@/pulseflowApiClient';
 
+import DashboardAutomationRemoteContainer from './dashboard-automation-remote-container.component';
 
-const SealedRemoteControlCard = ({output, loading}) => {
+
+const SealedRemoteControlCard = ({output, loading, projectId}) => {
     const toast = useToast();
     const {language} = useLanguage();
     // const { data: toggleOn, loading: toggleOnLoading, error: toggleOnError, fetchData: fetchOnToggle } = useFetchData(`/toggle/output/${output.id}/on`);
@@ -79,8 +81,7 @@ const SealedRemoteControlCard = ({output, loading}) => {
     return (
         <Card mt={4} bgColor={"rgba(0, 0, 0, 0.1)"} w="full" p={4} boxShadow="lg">
             <CardHeader color="green.500" textAlign='center'>
-                {output.output_name}
-                {/* <Image rounded={'full'}  src='/images/motor-icon.png'/> */}
+                <Text>{output.output_name}</Text>       
             </CardHeader>
             <CardBody>
                 <VStack>
@@ -106,7 +107,8 @@ const SealedRemoteControlCard = ({output, loading}) => {
                             <Text color='gray.300'   fontSize="lg" > {sensor.value} {sensor.units_of_measure}</Text>
                         </HStack>
                     ))}
-                    
+                    <Divider mt={4} />
+                    <DashboardAutomationRemoteContainer projectId={projectId} output={output} />
                 </VStack>
             </CardBody>
         </Card>

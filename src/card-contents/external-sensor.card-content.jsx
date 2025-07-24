@@ -13,19 +13,19 @@ const ExternalSensorCardContent = ({ externalSensor }) => {
     
     return(
         <>
-        <Heading as="h3" size="lg">
+        <Heading color={'white'} as="h3" size="lg">
             {externalSensor.name}
         </Heading>
-        <Text>
+        <Text color={'white'} fontSize="md">
             {externalSensor.description}
         </Text>
-        <Text>
+        <Text color={'white'} fontSize="md">
             {externalSensor.value} {externalSensor.units_of_measure}
         </Text>
-        <Text>
+        <Text color={'white'} fontSize="md">
             {deviceData && deviceData.name}
         </Text>
-        <Text>
+        <Text color={'white'} fontSize="md">
             {externalSensor.location}
         </Text>
         </>

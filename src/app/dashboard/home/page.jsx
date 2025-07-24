@@ -6,10 +6,23 @@ import UserContext from '@/contexts/user-context';
 import {useLanguage} from '@/contexts/language-context';
 import useFetchData from '@/hooks/useFetchData';
 
+import { Box, Flex, Stack, HStack, Select, Spinner, Skeleton, VStack, IconButton, Text } from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+} from '@chakra-ui/react'
+
+import { GrNext, GrPrevious  } from "react-icons/gr";
+import { optionStyle } from '@/utils';
+
+import ExternalSensorContainer from '@/components/external-sensor-container.component';
 import CardGrid from '@/components/card-grid.component';
 import SealedRemoteControlCard from '@/components/sealed-remote-control-card.component';
-import { Box, Flex, Stack, HStack, Select, Spinner, Skeleton, VStack, IconButton, Text } from "@chakra-ui/react";
-import { GrNext, GrPrevious  } from "react-icons/gr";
+import SwitchRemoteControlCard from '@/components/switch-remote-control-card.component';
+
 const DashboardHomePage = () => {
     const { user } = useContext(UserContext) || {};
     const { language } = useLanguage();
@@ -24,9 +37,16 @@ const DashboardHomePage = () => {
 
     const handleDecreasePage = () => setPage(page - 1);
 
+    const [isRefreshing, setIsRefreshing] = useState(false);
+
+
+    // projects fetching
     useEffect(() => {
-      if(projects  && !projectsLoading){ 
+      if(projects  && !projectsLoading && projects[0] && projects[0].id){ 
+        
         setSelectedProject(projects[0].id);
+      }else{
+        setSelectedProject(null);
       }
     }, [projects, projectsLoading, projectsError]);
 
@@ -39,18 +59,19 @@ const DashboardHomePage = () => {
           }
     }, [projects]);
 
-   
-
-
-    const { data: outputs, loading: outputsLoading, error: outputsError, refetch: fetchOutputs } = useFetchData(`/outputs/project/${selectedProject}/actuator_cards?outOfOrder=false&page=${page}&size=${limit}`);
+    // fetching outputs here
+    const { data: outputs, loading: outputsLoading, error: outputsError, refetch: fetchOutputs } = useFetchData(selectedProject ? `/outputs/project/${selectedProject}/actuator_cards?outOfOrder=false&page=${page}&size=${limit}` : null);
 
     useEffect(() => {
       const interval = setInterval(() => {
-        fetchOutputs();
+        if (outputs && outputs.actuator_cards) {
+          setIsRefreshing(true);
+        }
+        fetchOutputs().finally(() => setIsRefreshing(false));
       }, 15000); // 30000 milliseconds = 30 seconds
 
       return () => clearInterval(interval); // Cleanup interval on component unmount
-    }, [fetchOutputs]);
+    }, [fetchOutputs, outputs]);
 
     useEffect(() => {
       if(outputs && outputs.total >= outputs.page * outputs.size ) {
@@ -59,10 +80,12 @@ const DashboardHomePage = () => {
         setShowPagination(false);
       }
     }, [selectedProject, outputs]);
-   
+
+    
+    
     return (
       
-      <Box p={4}>
+      <Box p={4} bgColor={'rgba(0, 0, 0, 0.1)'} borderRadius="md">
        
         <HStack mt={2} spacing={4} align='center' justify='center'>
             {projectsLoading && (
@@ -73,9 +96,10 @@ const DashboardHomePage = () => {
               </Flex>
             )}
             {projects && !projectsLoading && (
-              <Select w={'md'} color={'green'} backgroundColor={'rgba(127, 127, 127, 0.2)'} textAlign={'center'} placeholder={language === 'en' ? "Select Project" : "Proje Seçiniz"} onChange={(e) => setSelectedProject(e.target.value)} value={selectedProject}>
+              <Select w={'md'} color={'green'} backgroundColor={'rgba(127, 127, 127, 0.2)'} textAlign={'center'}  onChange={(e) => setSelectedProject(e.target.value)} value={selectedProject}>
+                <option style={optionStyle} value=''>{language === 'en' ? 'Select Project' : 'Proje Seçiniz.'}</option>
                 {projects && projects.map((project, index) => (
-                  <option key={index} value={project.id}>
+                  <option style={optionStyle} key={index} value={project.id}>
                     {project.name}
                   </option>
                 ))}
@@ -83,20 +107,43 @@ const DashboardHomePage = () => {
             )}
             
         </HStack>
+        
+        <Accordion allowToggle bgColor={'rgba(255, 255, 255, 0.1)'} mt={4} mb={4} borderRadius="md" >
+          <AccordionItem>
+            <h2>
+              <AccordionButton color={'white'} _expanded={{ bg: 'green.800', color: 'white' }} _hover={{ bg: 'green.900' }}>
+                <Box color={'white'} as='span' flex='1' textAlign='center'>
+                  <Text color={'white'} fontSize="lg" fontWeight="bold">{language === 'en' ? 'Sensors' : 'Sensörler'}</Text>
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              <ExternalSensorContainer project={selectedProject} />
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
 
-        <CardGrid >
-          {outputsLoading && (
+        <CardGrid>
+          {outputsLoading && !outputs ? (
             <Flex align='center' justify='center' direction='column'>
               <Spinner size="xl" color="green.500" />
               <Skeleton height="20vh"/>
-              {/* <SkeletonText mt={4} noOfLines={4} spacing="4" /> */}
             </Flex>
+          ) : (
+            <>
+              {isRefreshing && (
+                <Spinner size="sm" color="green.500" position="absolute" top={2} right={2} />
+              )}
+              {outputs && outputs.actuator_cards && outputs.actuator_cards.map((output) =>
+                output.relays[0].relay_type === 'toggle' ? (
+                  <SwitchRemoteControlCard key={output.id} output={output} loading={false} projectId={selectedProject} />
+                ) : (
+                  <SealedRemoteControlCard key={output.id} output={output} loading={false} projectId={selectedProject} />
+                )
+              )}
+            </>
           )}
-         
-          {outputs && !outputsLoading && outputs.actuator_cards && outputs.actuator_cards.map((output) => (
-                <SealedRemoteControlCard key={output.id} output={output} loading={outputsLoading} />
-          ))}
-          
         </CardGrid>
         {showPagination && (
               <VStack>

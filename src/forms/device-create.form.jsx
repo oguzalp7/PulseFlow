@@ -10,6 +10,8 @@ import UserContext from '@/contexts/user-context';
 import { useLanguage } from '@/contexts/language-context';
 import GlowingGreenNeonButton from '@/components/glowing-neon-green-button.component';
 
+import { optionStyle } from '@/utils';
+
 const schema = yup.object().shape({
     name: yup.string().required("Device name is required. / Cihaz adı zorunludur."),
     mac_address: yup.string().required("MAC address is required. / MAC adresi zorunludur."),
@@ -59,7 +61,7 @@ const DeviceCreateForm = ({ onSubmit, defaultValues }) => {
                         render={({ field }) => (
                             <Select textAlign={'center'} color={'lime'} focusBorderColor='lime' placeholder={language === 'en' ? 'Please select your project.' : 'Projenizi seçiniz.'} _placeholder={{opacity: 0.4, color: 'inherit'}} {...field}>
                                 {projects && projects.map((project, index) => (
-                                    <option key={index} value={project.id}>
+                                    <option style={optionStyle} key={index} value={project.id}>
                                         {project.name}
                                     </option>
                                 ))}

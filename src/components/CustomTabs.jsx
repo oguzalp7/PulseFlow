@@ -17,7 +17,7 @@ const CustomTabs = ({ tabs, styleProps }) => {
             </TabList>
             <TabPanels boxSize={'100%'}>
                 {tabs.map((tab, index) => (
-                    <TabPanel key={index} align={['center', 'left']}>
+                    <TabPanel  key={index} align={['center', 'left']}>
                         {tab.content}
                     </TabPanel>
                 ))}

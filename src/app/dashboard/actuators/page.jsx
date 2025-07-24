@@ -16,6 +16,8 @@ import ActuatorCardContent from '@/card-contents/actuator.card-content';
 import CustomTabs from '@/components/CustomTabs';
 import CardLayout from '@/components/card-layout.component';
 
+import { optionStyle } from '@/utils';
+
 const ActuatorsPage = () => {
     const { user } = useContext(UserContext);
     const { language } = useLanguage();
@@ -137,9 +139,10 @@ const ActuatorsPage = () => {
                             </Flex>
                         )}
                         {projects && !projectsLoading && (
-                            <Select color={'green'} backgroundColor={'rgba(127, 127, 127, 0.2)'} textAlign={'center'} placeholder='Select Project' onChange={(e) => setSelectedProject(e.target.value)} value={selectedProject}>
+                            <Select color={'green'} backgroundColor={'rgba(127, 127, 127, 0.2)'} textAlign={'center'}  onChange={(e) => setSelectedProject(e.target.value)} value={selectedProject}>
+                                <option style={optionStyle} value=''>{language === 'en' ? 'All Projects' : 'Tüm Projeler'}</option>
                                 {projects && projects.map((project, index) => (
-                                    <option key={index} value={project.id}>
+                                    <option style={optionStyle} key={index} value={project.id}>
                                         {project.name}
                                     </option>
                                 ))}

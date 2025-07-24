@@ -9,6 +9,7 @@ import useFetchData from '@/hooks/useFetchData';
 import UserContext from '@/contexts/user-context';
 import { useLanguage } from '@/contexts/language-context';
 import GlowingGreenNeonButton from '@/components/glowing-neon-green-button.component';
+import { optionStyle } from '@/utils';
 
 const externalSensorSchema = yup.object().shape({
     name: yup.string().min(3, 'En az 3 karakter olmalı').required('Zorunlu alan'),
@@ -88,9 +89,9 @@ const ExternalSensorCreateForm = ({ onSubmit, defaultValues = INITIAL_FORM_STATE
                             value={selectedProject || ''}
                             onChange={handleProjectChange}
                         >
-                            <option value="">{language === 'en' ? 'Select a project' : 'Bir proje seçiniz'}</option>
+                            <option style={optionStyle} value="">{language === 'en' ? 'Select a project' : 'Bir proje seçiniz'}</option>
                             {projects?.map((project) => (
-                                <option key={project.id} value={project.id}>
+                                <option style={optionStyle} key={project.id} value={project.id}>
                                     {project.name}
                                 </option>
                             ))}
@@ -111,9 +112,9 @@ const ExternalSensorCreateForm = ({ onSubmit, defaultValues = INITIAL_FORM_STATE
                                 isDisabled={!selectedProject}
                                 value={field.value || ''}
                             >
-                                <option value="">{language === 'en' ? 'Select a device' : 'Bir cihaz seçiniz'}</option>
+                                <option style={optionStyle} value="">{language === 'en' ? 'Select a device' : 'Bir cihaz seçiniz'}</option>
                                 {devices?.devices?.map((device) => (
-                                    <option key={device.id} value={device.id}>
+                                    <option style={optionStyle} key={device.id} value={device.id}>
                                         {device.name}
                                     </option>
                                 ))}

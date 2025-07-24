@@ -19,6 +19,7 @@ import CustomTabs from '@/components/CustomTabs';
 
 import CardLayout from '@/components/card-layout.component';
 import InternalSensorCardContent from '@/card-contents/internal-sensor.card-content';
+import { optionStyle } from '@/utils';
 
 const InternalSensorsPage = () => {
     const { user } = useContext(UserContext);
@@ -148,9 +149,10 @@ const InternalSensorsPage = () => {
                             </Flex>
                         )}
                         {projects && !projectsLoading && (
-                            <Select color={'green'} backgroundColor={'rgba(127, 127, 127, 0.2)'} textAlign={'center'} placeholder={language === 'en' ? 'Select Project.' : 'Proje Seçiniz.'} onChange={(e) => setSelectedProject(e.target.value)} value={selectedProject}>
+                            <Select color={'green'} backgroundColor={'rgba(127, 127, 127, 0.2)'} textAlign={'center'}  onChange={(e) => setSelectedProject(e.target.value)} value={selectedProject}>
+                                <option style={optionStyle} value=''>{language === 'en' ? 'Select Project' : 'Proje Seçiniz.'}</option>
                                 {projects.map((project, index) => (
-                                    <option key={index} value={project.id}>
+                                    <option style={optionStyle} key={index} value={project.id}>
                                         {project.name}
                                     </option>
                                 ))}
@@ -163,9 +165,10 @@ const InternalSensorsPage = () => {
                             </Flex>
                         )}
                         {devices && !devicesLoading && (
-                            <Select color={'green'} backgroundColor={'rgba(127, 127, 127, 0.2)'} textAlign={'center'} placeholder={language === 'en' ? 'Select Device' : 'Cihaz Seçiniz.'} onChange={(e) => setSelectedDevice(e.target.value)} value={selectedDevice}>
+                            <Select color={'green'} backgroundColor={'rgba(127, 127, 127, 0.2)'} textAlign={'center'} onChange={(e) => setSelectedDevice(e.target.value)} value={selectedDevice}>
+                                <option style={optionStyle} value=''>{language === 'en' ? 'Select Device' : 'Cihaz Seçiniz.'}</option>
                                 {devices && devices.devices && devices.devices.map((device, index) => (
-                                    <option key={index} value={device.id}>
+                                    <option style={optionStyle} key={index} value={device.id}>
                                         {device.name}
                                     </option>
                                 ))}

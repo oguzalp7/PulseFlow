@@ -13,6 +13,8 @@ import GlowingGreenNeonButton from '@/components/glowing-neon-green-button.compo
 import useToggleSwitch from '@/hooks/useToggleSwitch';
 import NeonSwitch from '@/components/neon-switch.component';
 
+import { optionStyle } from '@/utils';
+
 const schema = yup.object().shape({
   automation_id: yup.number().required('Automation ID is required').positive('Automation ID must be greater than 0'),
   condition_type: yup.mixed().oneOf(['time', 'external_sensor', 'internal_sensor', 'external_event']).default('time'),

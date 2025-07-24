@@ -15,6 +15,8 @@ import CardLayout from '@/components/card-layout.component';
 import AutomationCardContent from '@/card-contents/automation.card-content';
 import CustomTabs from '@/components/CustomTabs';
 
+import { optionStyle } from '@/utils';
+
 const AutomationsPage = () => {
     const { user } = useContext(UserContext);
     const { language } = useLanguage();
@@ -194,33 +196,33 @@ const AutomationsPage = () => {
             label: language === 'en' ? 'Automations' : 'Otomasyonlar',
             content: (
                 <>
-                    <Flex mb={4} justifyContent='space-between' alignItems='center'>
-                        <Checkbox isChecked={isActiveFilter} onChange={handleFilterChange} colorScheme='green'>
-                            {language === 'en' ? 'Show Active Only' : 'Sadece Aktifleri Göster'}
+                    <Flex mb={4} justifyContent='space-between' alignItems='center' fontColor={'gray.300'}>
+                        <Checkbox  isChecked={isActiveFilter} onChange={handleFilterChange} colorScheme='green'>
+                            <Text color={'gray.300'} >{language === 'en' ? 'Show Active Only' : 'Sadece Aktifleri Göster'}</Text>
                         </Checkbox>
-                        <Select value={selectedProject} onChange={handleProjectChange} w='200px' colorScheme='green'>
-                            <option value=''>{language === 'en' ? 'All Projects' : 'Tüm Projeler'}</option>
+                        <Select value={selectedProject} onChange={handleProjectChange} w='200px' color='lime'  _placeholder={{opacity: 0.4, color: 'inherit'}}>
+                            <option style={optionStyle} value=''>{language === 'en' ? 'All Projects' : 'Tüm Projeler'}</option>
                             {projects && projects.map((project) => (
-                                <option key={project.id} value={project.id}>{project.name}</option>
+                                <option style={optionStyle} key={project.id} value={project.id}>{project.name}</option>
                             ))}
                         </Select>
-                        <Select value={selectedOutput} onChange={handleOutputChange} w='200px' colorScheme='green'>
-                            <option value=''>{language === 'en' ? 'All Outputs' : 'Tüm Çıkışlar'}</option>
+                        <Select value={selectedOutput} onChange={handleOutputChange} w='200px' color='lime'  _placeholder={{opacity: 0.4, color: 'inherit'}}>
+                            <option style={optionStyle} value=''>{language === 'en' ? 'All Outputs' : 'Tüm Çıkışlar'}</option>
                             {outputs && outputs.outputs.map((output) => (
-                                <option key={output.id} value={output.id}>{output.name}</option>
+                                <option style={optionStyle} key={output.id} value={output.id}>{output.name}</option>
                             ))}
                         </Select>
-                        <Select value={automationType} onChange={handleAutomationTypeChange} w='200px' colorScheme='green'>
-                            <option value=''>{language === 'en' ? 'All Types' : 'Tüm Tipler'}</option>
-                            <option value='time'>{language === 'en' ? 'Time' : 'Zaman'}</option>
-                            <option value='sensor'>{language === 'en' ? 'Sensor' : 'Sensör'}</option>
-                            <option value='time_and_sensor'>{language === 'en' ? 'Time and Sensor' : 'Zaman ve Sensör'}</option>
+                        <Select value={automationType} onChange={handleAutomationTypeChange} w='200px' color='lime'  _placeholder={{opacity: 0.4, color: 'inherit'}}>
+                            <option style={optionStyle} value=''>{language === 'en' ? 'All Types' : 'Tüm Tipler'}</option>
+                            <option style={optionStyle} value='time'>{language === 'en' ? 'Time' : 'Zaman'}</option>
+                            <option style={optionStyle} value='sensor'>{language === 'en' ? 'Sensor' : 'Sensör'}</option>
+                            <option style={optionStyle} value='time_and_sensor'>{language === 'en' ? 'Time and Sensor' : 'Zaman ve Sensör'}</option>
                         </Select>
-                        <Select value={desiredState} onChange={handleDesiredStateChange} w='200px' colorScheme='green'>
-                            <option value=''>{language === 'en' ? 'All States' : 'Tüm Durumlar'}</option>
-                            <option value='turn_on'>{language === 'en' ? 'Turn On' : 'Aç'}</option>
-                            <option value='turn_off'>{language === 'en' ? 'Turn Off' : 'Kapat'}</option>
-                            <option value='toggle'>{language === 'en' ? 'Toggle' : 'Değiştir'}</option>
+                        <Select value={desiredState} onChange={handleDesiredStateChange} w='200px' color='lime'  _placeholder={{opacity: 0.4, color: 'inherit'}}>
+                            <option style={optionStyle} value=''>{language === 'en' ? 'All States' : 'Tüm Durumlar'}</option>
+                            <option style={optionStyle} value='turn_on'>{language === 'en' ? 'Turn On' : 'Aç'}</option>
+                            <option style={optionStyle} value='turn_off'>{language === 'en' ? 'Turn Off' : 'Kapat'}</option>
+                            <option style={optionStyle} value='toggle'>{language === 'en' ? 'Toggle' : 'Değiştir'}</option>
                         </Select>
                         {/* <Select value={sortBy} onChange={handleSortChange} w='200px' colorScheme='green'>
                             <option value='name'>{language === 'en' ? 'Name' : 'İsim'}</option>

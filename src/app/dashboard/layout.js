@@ -19,7 +19,14 @@ const DashboardLayout = ({ children }) => {
       <Flex direction="column" w="full" h="full">
         <Navbar pos='sticky' />
         <Flex direction="row" flex="1">
+          
           <Sidebar />
+          <Box
+            ml="100px" // margin-left matches sidebar width
+            transition="width 0.2s"
+            w="20%"
+            display={['full', 'none']}
+          ></Box>
           <Box flex="1" p={4}>
             {children}
           </Box>

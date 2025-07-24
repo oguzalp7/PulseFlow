@@ -9,6 +9,7 @@ import useFetchData from '@/hooks/useFetchData';
 import UserContext from '@/contexts/user-context';
 import { useLanguage } from '@/contexts/language-context';
 import GlowingGreenNeonButton from '@/components/glowing-neon-green-button.component';
+import { optionStyle } from '@/utils';
 
 const schema = yup.object().shape({
     name: yup.string().min(3, "Relay name must be at least 3 characters long.").required("Relay name required. / Röle adı zorunludur."),
@@ -57,7 +58,7 @@ const RelayCreateForm = ({ onSubmit, defaultValues }) => {
             {projects && !projectsLoading && (
                 <Select color={'green'} backgroundColor={'rgba(127, 127, 127, 0.2)'} textAlign={'center'} placeholder={language === 'en' ? 'Select Project.' : 'Proje Seçiniz.'} onChange={(e) => setSelectedProject(e.target.value)} value={selectedProject}>
                     {projects && projects.map((project, index) => (
-                        <option key={index} value={project.id}>
+                        <option style={optionStyle} key={index} value={project.id}>
                             {project.name}
                         </option>
                     ))}
@@ -75,7 +76,7 @@ const RelayCreateForm = ({ onSubmit, defaultValues }) => {
                         render={({ field }) => (
                             <Select textAlign={'center'} color={'lime'} focusBorderColor='lime' placeholder={language === 'en' ? 'Please select your device.' : 'Cihaz seçimi yapınız.'} _placeholder={{opacity: 0.4, color: 'inherit'}} {...field}>
                                 {devices && devices.devices.map((devices, index) => (
-                                    <option key={index} value={devices.id}>
+                                    <option style={optionStyle} key={index} value={devices.id}>
                                         {devices.name}
                                     </option>
                                 ))}
@@ -102,8 +103,8 @@ const RelayCreateForm = ({ onSubmit, defaultValues }) => {
                         control={control}
                         render={({ field }) => (
                             <Select textAlign={'center'} color={'lime'} focusBorderColor='lime' placeholder={language === 'en' ? 'Please select GPIO type.' : 'GPIO tipini seçiniz.'} _placeholder={{opacity: 0.4, color: 'inherit'}} {...field}>
-                                <option value="builtin">Builtin</option>
-                                <option value="pcf8574">PCF8574</option>
+                                <option style={optionStyle} value="builtin">Builtin</option>
+                                <option style={optionStyle} value="pcf8574">PCF8574</option>
                             </Select>
                         )}
                     />
@@ -147,9 +148,9 @@ const RelayCreateForm = ({ onSubmit, defaultValues }) => {
                         control={control}
                         render={({ field }) => (
                             <Select textAlign={'center'} color={'lime'} focusBorderColor='lime' placeholder={language === 'en' ? 'Please select relay type.' : 'Röle tipini seçiniz.'} _placeholder={{opacity: 0.4, color: 'inherit'}} {...field}>
-                                <option value="start">Start</option>
-                                <option value="stop">Stop</option>
-                                <option value="toggle">Toggle</option>
+                                <option style={optionStyle} value="start">Start</option>
+                                <option style={optionStyle} value="stop">Stop</option>
+                                <option style={optionStyle} value="toggle">Toggle</option>
                             </Select>
                         )}
                     />
@@ -164,7 +165,7 @@ const RelayCreateForm = ({ onSubmit, defaultValues }) => {
                         render={({ field }) => (
                             <Select textAlign={'center'} color={'lime'} focusBorderColor='lime' placeholder={language === 'en' ? 'Please select output.' : 'Çıkışı seçiniz.'} _placeholder={{opacity: 0.4, color: 'inherit'}} value={selectedActuator} onChange={(e) => setSelectedActuator(e.target.value)} {...field}>
                                 {actuators && actuators.outputs && actuators.outputs.map((actuator, index) => (
-                                    <option key={index} value={actuator.id}>
+                                    <option style={optionStyle} key={index} value={actuator.id}>
                                         {actuator.name}
                                     </option>
                                 ))}

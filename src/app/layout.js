@@ -8,6 +8,10 @@ export const metadata = {
   description: "Your new periodic automation system.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 export default function RootLayout({ children }) {
   
 

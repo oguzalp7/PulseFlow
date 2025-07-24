@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import {
     Flex,
     Text,
@@ -12,7 +12,7 @@ import {
     Menu,
     MenuButton,
     MenuList,
-    Link
+    Link, useBreakpointValue
 } from '@chakra-ui/react'
 
 import {
@@ -35,11 +35,13 @@ import { LuBrainCircuit } from "react-icons/lu";
 import { GiRobotGrab } from "react-icons/gi";
 import { IoIosSwitch } from "react-icons/io";
 import { MdOutlineMonitorHeart, MdMonitorHeart } from "react-icons/md";
+import { RiAlarmWarningFill, RiAlarmWarningLine } from "react-icons/ri";
 
 import { ImStack } from "react-icons/im";
 import { BsClipboardData } from "react-icons/bs";
 
 import NextLink from 'next/link';
+import { usePathname } from "next/navigation";
 
 
 const NavHoverBox = ({ title, icon, description }) => {
@@ -76,6 +78,11 @@ const NavHoverBox = ({ title, icon, description }) => {
 }
 
 const NavItem = ({ title, icon, active, description, navSize, href }) => {
+    const pathname = usePathname();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
 
     return (
         <Flex
@@ -130,21 +137,38 @@ const Sidebar = () => {
 
     const showMenuItems = user && auth_index && auth_index >= 3;
     
+    // Responsive width: full width on mobile when expanded
+    const sidebarWidth = useBreakpointValue({
+        base: navSize === "small" ? "60px" : "80vw", // 80vw for expanded on mobile
+        md: navSize === "small" ? "75px" : "200px", // desktop/tablet
+    });
+
+    const sidebarPosition = useBreakpointValue({
+        // base: "fixed", // fixed on mobile
+        base: "absolute", // fixed on mobile
+        md: "sticky",  // sticky on desktop/tablet
+    });
+
     return (
         <Flex
-            pos="sticky"
+            pos={sidebarPosition}
             left="5"
             //h={navSize == "small" ? "120vh" : "130vh"}
             
-            marginTop="2.5vh"
+            marginTop={{ base: 0, md: "2.5vh" }}
             boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
             backgroundColor="rgba(255, 255, 255, 0.05)"
             borderRadius={navSize == "small" ? "15px" : "30px"}
-            w={navSize == "small" ? "75px" : "200px"}
+            // w={navSize == "small" ? "75px" : "200px"}
+            // w='100%'
+            w={sidebarWidth}
             flexDir="column"
             justifyContent="space-between"
-            overflowY={'auto'}
+            overflowY={['scroll', 'auto']}
             //maxH={"100vh"}
+            // ml={navSize == "small" ? "10px" : "100px"}
+            // transition="margin 0.2s"
+            transition="width 0.2s"
         >
             <Flex
                 p="5%"
@@ -179,9 +203,10 @@ const Sidebar = () => {
                     
                     <NavItem navSize={navSize} icon={BsClipboardData} title={language == 'en' ? 'Logs' : 'Loglar'} href={'/dashboard/logs'}/>
                     <NavItem navSize={navSize} icon={FiCalendar} title={language == 'en' ? 'Automations' : 'Otomasyonlar'} href={'/dashboard/automations'}/>
-                    <NavItem navSize={navSize} icon={FiUser} title={language == 'en' ? 'User' : 'Kullanıcı'} href={'/dashboard/home'}/>
-                    <NavItem navSize={navSize} icon={FiSettings} title={language == 'en' ? 'Settings' : 'Ayarlar'} href={'/dashboard/home'}/>
-                    <NavItem navSize={navSize} icon={FiPhoneOutgoing} title={language == 'en' ? 'Contact' : 'İletişim'} href={'/dashboard/home'}/>
+                    <NavItem navSize={navSize} icon={RiAlarmWarningLine} title={language == 'en' ? 'Alarms' : 'Alarm'} href={'/dashboard/alarms'}/>
+                    <NavItem navSize={navSize} icon={FiUser} title={language == 'en' ? 'User' : 'Kullanıcı'} href={'/dashboard/profile'}/>
+                    <NavItem navSize={navSize} icon={FiSettings} title={language == 'en' ? 'Settings' : 'Ayarlar'} href={'/dashboard/settings'}/>
+                    <NavItem navSize={navSize} icon={FiPhoneOutgoing} title={language == 'en' ? 'Contact' : 'İletişim'} href={'/dashboard/contact'}/>
                     </>
                     
 

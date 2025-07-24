@@ -9,7 +9,7 @@ const useUpdateData = (url) => {
     const updateData = async (id, updatedData) => {
       setLoading(true);
       try {
-        const response = await pfClient.put(`${url}/${id}`, updatedData);
+        const response = await pfClient.put(id ? `${url}/${id}`: `${url}/`, updatedData);
         setData(response.data);
       } catch (err) {
         setError(err);

@@ -3,6 +3,7 @@
 import React from 'react';
 import { useLanguage } from '@/contexts/language-context';
 import { Select, Text } from '@chakra-ui/react';
+import { optionStyle } from '@/utils';
 
 const LanguageDropdown = () => {
     const { language, changeLanguage, availableLanguages } = useLanguage();
@@ -22,7 +23,7 @@ const LanguageDropdown = () => {
     return (
         <Select backgroundColor={'transparent'} color='green' textAlign='center' value={language} onChange={handleLanguageChange}>
         {availableLanguages.map((lang, index) => (
-            <option key={lang.id} value={lang.code}> 
+            <option style={optionStyle} key={lang.id} value={lang.code}> 
                 {lang.name}
             </option>
         ))}

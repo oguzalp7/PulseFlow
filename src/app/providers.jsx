@@ -15,9 +15,9 @@ export function Providers({ children }) {
   return <ChakraProvider theme={theme}>
     <LanguageProvider>
       <Box
-          maxHeight="200vh"
+          maxHeight={["500vh","200vh"]}
           minHeight={"180vh"}
-          minWidth={['155vw', '100vw', '100vw', '100vw']}
+          minWidth={['175vw', '100vw', '100vw', '100vw']}
           display="flex"
           flexDirection="column"
           w={'full'}

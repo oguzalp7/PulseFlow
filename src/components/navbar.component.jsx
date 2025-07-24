@@ -26,7 +26,7 @@ import {
               spacing={5}
               
           >
-             <Image 
+             {/* <Image 
               boxSize={['60px', '80px', '90px', '90px']}
               objectFit='cover' 
               // src="https://lavittoria.ai/img/LV.png"
@@ -35,30 +35,33 @@ import {
                 console.log('image')
                 window.location.href = '/'
               }}
-              /> 
-              <Stack display={['none', 'flex', 'flex']} direction={'column'} spacing={1}>
-                  <Heading
-                   mt={4} 
-                   color='gray.300' 
-                   onClick={() =>{
-                    console.log('heading')
-                    window.location.href = '/'
-                  }}
-                  >
-                    La Vittoria AI
-                  </Heading>
-                  <Text 
+              /> */}
+
+              <Image
+                    boxSize={['60px', '80px', '90px', '120px']}
+                    objectFit='cover'
+                    src="/icons/icon-transparent-512x512.png"
+                    onClick={() => window.location.href = '/'}
+                    cursor="pointer"
+                />
+                <Stack display={['none', 'flex', 'flex']} direction={'column'} spacing={1}>
+                    <Heading
+                    mt={4}
+                    color='gray.300'
+                    onClick={() => window.location.href = '/'}
+                    cursor="pointer"
+                    >
+                    Pulse Flow
+                    </Heading>
+                    <Text
                     ml={0}
                     color={'green'}
-                    onClick={() =>{
-                      console.log('text')
-                      window.location.href = '/'
-                    }}
-                  >
-                    /*Pulse Flow*/
-                  </Text>
-              </Stack>
-              
+                    onClick={() => window.location.href = '/'}
+                    cursor="pointer"
+                    >
+                    /* Powered By La Vittoria AI */
+                    </Text>
+                </Stack>
           </Stack>
   
           <MenuToggle toggle={toggle} isOpen={isOpen} />
