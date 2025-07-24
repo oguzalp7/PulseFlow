@@ -25,7 +25,7 @@ export function Providers({ children }) {
           // //alignItems="center"
           bg="rgba(255, 255, 255, 0.8)"
           p={4}
-          backgroundImage={`url('/images/bg.jpeg')`}
+          backgroundImage={'/images/bg.jpeg'}
         >{children}
       </Box>
     </LanguageProvider>
