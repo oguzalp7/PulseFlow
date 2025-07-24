@@ -8,7 +8,6 @@ import LandingPageAdsContainer from '@/components/landing-page/ads-container.com
 import Footer from '@/components/footer.component';
 import LandingPageContent from '@/components/landing-page/content.component';
 
-
 const Content = () => {
     return (
         <Stack flex={1} alignItems="center" justifyContent="center" p={4}>
@@ -48,7 +47,7 @@ const Content = () => {
 }
 
 export default function Home() {
-  
+  console.log(process.env.NEXT_PUBLIC_PULSEFLOW_API_URL);
   return (
     <Box p={4}>
         <LandingPageHeader/>
