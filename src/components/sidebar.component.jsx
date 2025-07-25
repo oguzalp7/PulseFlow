@@ -193,6 +193,8 @@ const Sidebar = () => {
                 
                 <NavItem navSize={navSize} icon={FiHome} title={language == 'en' ? 'Dashboard' : 'Pano'} href={'/dashboard/home'}/>
                 <NavItem navSize={navSize} icon={ImStack } title={language == 'en' ? 'Projects' : 'Projeler'} href={'/dashboard/projects'}/>
+                <NavItem navSize={navSize} icon={FiCalendar} title={language == 'en' ? 'Automations' : 'Otomasyonlar'} href={'/dashboard/automations'}/>
+
                 {showMenuItems && (
                     <>
                     <NavItem navSize={navSize} icon={LuBrainCircuit} title={language == 'en' ? 'Devices' : 'Cihazlar'} href={'/dashboard/devices'}/>
@@ -202,16 +204,16 @@ const Sidebar = () => {
                     <NavItem navSize={navSize} icon={MdOutlineMonitorHeart} title={language == 'en' ? 'External Sensor' : 'Harici Sensörler'}  href={'/dashboard/external-sensors'}/>
                     
                     <NavItem navSize={navSize} icon={BsClipboardData} title={language == 'en' ? 'Logs' : 'Loglar'} href={'/dashboard/logs'}/>
-                    <NavItem navSize={navSize} icon={FiCalendar} title={language == 'en' ? 'Automations' : 'Otomasyonlar'} href={'/dashboard/automations'}/>
+                    {/* <NavItem navSize={navSize} icon={FiCalendar} title={language == 'en' ? 'Automations' : 'Otomasyonlar'} href={'/dashboard/automations'}/> */}
                     <NavItem navSize={navSize} icon={RiAlarmWarningLine} title={language == 'en' ? 'Alarms' : 'Alarm'} href={'/dashboard/alarms'}/>
-                    <NavItem navSize={navSize} icon={FiUser} title={language == 'en' ? 'User' : 'Kullanıcı'} href={'/dashboard/profile'}/>
                     <NavItem navSize={navSize} icon={FiSettings} title={language == 'en' ? 'Settings' : 'Ayarlar'} href={'/dashboard/settings'}/>
-                    <NavItem navSize={navSize} icon={FiPhoneOutgoing} title={language == 'en' ? 'Contact' : 'İletişim'} href={'/dashboard/contact'}/>
                     </>
                     
 
                 )}
-                
+
+                <NavItem navSize={navSize} icon={FiUser} title={language == 'en' ? 'User' : 'Kullanıcı'} href={'/dashboard/profile'}/>
+                <NavItem navSize={navSize} icon={FiPhoneOutgoing} title={language == 'en' ? 'Contact' : 'İletişim'} href={'/dashboard/contact'}/>
                 <NavItem navSize={navSize} icon={FiLogOut} title={language == 'en' ? 'Logout' : 'Çıkış'}  href={'/dashboard/logout'}/> 
                 
                 
